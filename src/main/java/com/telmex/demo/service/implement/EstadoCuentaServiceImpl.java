@@ -1,5 +1,6 @@
 package com.telmex.demo.service.implement;
 
+import com.telmex.demo.constants.EstadoCargaConstants;
 import com.telmex.demo.entity.EstadoCuenta;
 import com.telmex.demo.entity.EstadoCuentaDetalle;
 import com.telmex.demo.entity.EstatusCarga;
@@ -12,7 +13,12 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
 public class EstadoCuentaServiceImpl implements EstadoCuentaService {
@@ -30,34 +36,77 @@ public class EstadoCuentaServiceImpl implements EstadoCuentaService {
     }
 
     @Override
-    @Async
-    public void addDetalle(Set<EstadoCuentaDetalle> estadoCuentaDetalleSet) {
-        Instant begin = Instant.now();
-        estadoCuentaDetalleSet.forEach(this::insertThread);
-        Instant end = Instant.now();
-        System.out.println("Elapsed Time: " + Duration.between(begin, end).toString());
+    public Optional<EstadoCuenta> get(Integer idEstadoCuenta) {
+        return estadoCuentaRepository.findById(idEstadoCuenta);
     }
 
     @Override
-    public void updateStatusEstadoCuenta(Integer idEstadoCuenta, Integer idEstatusCarga) {
+    public Optional<EstatusCarga> ckeckEstatus(Integer idEstadoCuenta) {
+        Optional<EstatusCarga> estadoCuenta = estadoCuentaRepository.checkById(idEstadoCuenta);
+        return estadoCuenta;
+    }
+
+    @Override
+    @Async
+    public void addDetalle(Set<EstadoCuentaDetalle> estadoCuentaDetalleSet) {
+        Instant begin = Instant.now();
+        insertThread(estadoCuentaDetalleSet);
+        Instant end = Instant.now();
+        System.out.println("Elapsed Threads Time: " + Duration.between(begin, end).toString());
+    }
+
+    @Override
+    public void updateStatusEstadoCuenta(Integer idEstadoCuenta, EstatusCarga estatusCarga) {
         EstadoCuenta estadoCuenta = estadoCuentaRepository.findById(idEstadoCuenta).get();
-        EstatusCarga estatusCarga = new EstatusCarga();
-        estatusCarga.setIdEstatusCarga(idEstatusCarga);
+        estadoCuenta.setEstatusCarga(estatusCarga);
         estadoCuentaRepository.save(estadoCuenta);
     }
 
+
     @Async
-    public void insertThread(EstadoCuentaDetalle estadoCuentaDetalle) {
-        Thread hilo = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    estadoCuentaDetalleRepository.save(estadoCuentaDetalle);
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
-            }
-        };
-        hilo.start();
+    public void insertThread(Set<EstadoCuentaDetalle> estadoCuentaDetalleSet) {
+        CountDownLatch latch = new CountDownLatch(estadoCuentaDetalleSet.size());
+        ExecutorService executor = Executors.newFixedThreadPool(estadoCuentaDetalleSet.size());
+        estadoCuentaDetalleSet.forEach((estadoCuentaDetalle) -> {
+            executor.execute(new ActionService(latch, estadoCuentaDetalleRepository, estadoCuentaDetalle));
+        });
+        executor.shutdown();
+
+        try {
+            Instant begin = Instant.now();
+            latch.await();
+            updateStatusEstadoCuenta(estadoCuentaDetalleSet.iterator().next().getEstadoCuenta().getIdEstadoCuenta(), EstadoCargaConstants.FINALIZADO);
+            Instant end = Instant.now();
+            System.out.println("Elapsed INSERT Time: " + Duration.between(begin, end).toString());
+
+        } catch (InterruptedException ex) {
+            updateStatusEstadoCuenta(estadoCuentaDetalleSet.iterator().next().getEstadoCuenta().getIdEstadoCuenta(), EstadoCargaConstants.FALLIDO);
+            System.out.println(ex);
+        }
+
+        System.out.println("End of Action Services");
     }
+
+
+}
+
+class ActionService implements Runnable {
+    private final CountDownLatch latch;
+    private final EstadoCuentaDetalleRepository estadoCuentaDetalleRepository;
+
+    private final EstadoCuentaDetalle estadoCuentaDetalle;
+
+    public ActionService(CountDownLatch latch, EstadoCuentaDetalleRepository estadoCuentaDetalleRepository, EstadoCuentaDetalle estadoCuentaDetalle) {
+        this.latch = latch;
+        this.estadoCuentaDetalleRepository = estadoCuentaDetalleRepository;
+        this.estadoCuentaDetalle = estadoCuentaDetalle;
+    }
+
+    @Override
+    public void run() {
+        estadoCuentaDetalleRepository.save(estadoCuentaDetalle);
+        this.latch.countDown();
+    }
+
+
 }

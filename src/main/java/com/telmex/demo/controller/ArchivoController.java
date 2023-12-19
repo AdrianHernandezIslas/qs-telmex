@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/archivo")
@@ -20,10 +21,11 @@ public class ArchivoController {
     private ArchivoService archivoService;
 
     @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.ACCEPTED)
     @GetMapping(value = "procesar/{fecha}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<EstadoCuenta> procesarArchivo(@PathVariable(value = "fecha") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fecha){
         EstadoCuenta ec =archivoService.procesarArchivoEstadoCuenta(fecha);
-        return ResponseEntity.accepted().body(ec);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(ec);
     }
+
 }
