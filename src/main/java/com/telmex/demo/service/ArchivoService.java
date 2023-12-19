@@ -1,10 +1,12 @@
 package com.telmex.demo.service;
 
+import com.telmex.demo.entity.EstadoCuenta;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public interface ArchivoService {
 
-    void procesarArchivoEstadoCuenta(Date fechaArchivo);
+    EstadoCuenta procesarArchivoEstadoCuenta(LocalDate fechaArchivo);
 }

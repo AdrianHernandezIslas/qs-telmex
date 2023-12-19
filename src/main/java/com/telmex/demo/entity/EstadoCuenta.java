@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Data
@@ -14,10 +15,15 @@ import javax.persistence.*;
 public class EstadoCuenta {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column()
     private Integer idEstadoCuenta;
     private String estadoCuenta;
     private String nombreArchivo;
+    @ManyToOne
+    @JoinColumn(name = "idEstatusCarga", nullable = false)
+    private EstatusCarga estatusCarga;
 
+    @OneToMany(mappedBy = "estadoCuenta")
+    private Set<EstadoCuentaDetalle> detalleCuenta;
 }

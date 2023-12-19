@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ExcelReaderService {
@@ -20,11 +21,24 @@ public class ExcelReaderService {
     public BookDto<SheetDto<RowEstadoCuenta>> getFileEstadoCuenta(File file){
         book = new BookDto();
         List<RowEstadoCuenta> rows = parseDataFile(file);
+        //List<RowEstadoCuenta> rowsFilter = filterByValue("ABIERTA",rows);
+        //System.out.println(rows.size() +" -------- "+rowsFilter.size());
         SheetDto<RowEstadoCuenta> sheet = new SheetDto();
         sheet.setRows(rows);
         book.setSheet(sheet);
         book.setNameFile(file.getName());
         return book;
+    }
+
+    private List<RowEstadoCuenta> filterByValue(String value,List<RowEstadoCuenta> rows){
+        List<RowEstadoCuenta> filteredList;
+        filteredList = rows.stream()
+                .filter(employee -> {
+                    boolean res =value.equals(employee.getPisaE());
+                    return res;
+                })
+                .collect(Collectors.toList());
+        return filteredList;
     }
 
 

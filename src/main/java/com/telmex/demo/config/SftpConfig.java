@@ -27,6 +27,7 @@ public class SftpConfig {
         config.put("StrictHostKeyChecking", "no");
         jschSession.setConfig(config);
         jschSession.setPassword(password);
+        jschSession.setTimeout(30000);
         return jschSession;
     }
 }
