@@ -1,7 +1,7 @@
 package com.telmex.demo.controller;
 
 import com.telmex.demo.entity.Empleado;
-import com.telmex.demo.model.dto.CustomResponse;
+import com.telmex.demo.dto.CustomResponse;
 import com.telmex.demo.service.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

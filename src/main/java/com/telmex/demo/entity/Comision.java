@@ -10,15 +10,28 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-//@Table(name = "Comision")
+@Table(name = "comision")
 public class Comision {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	@Column()
+	private Integer idComision;
+	private Integer velocidad;
+	private String paquete;
+	private Double renta;
+	private Double posteo;
+	private Double navegacion;
+	private Double pagoCliente;
+	private Double total;
 	@ManyToOne
-	@JoinColumn(name = "clavePromotor", nullable = false)
-	private Promotor promotor;
-	private Double anticipo;
-	private Double montoDescuento;
+	@JoinColumn(name = "idTipoCliente", nullable = false)
+	private TipoCliente tipoCliente;
+	@ManyToOne
+	@JoinColumn(name = "idTipoServicio", nullable = false)
+	private TipoServicio tipoServicio;
+	@ManyToOne
+	@JoinColumn(name = "idPorcentajeComision", nullable = false)
+	private PorcentajeComision porcentajeComision;
+
 }

@@ -1,4 +1,4 @@
-package com.telmex.demo.model.dto;
+package com.telmex.demo.dto;
 
 import org.springframework.http.HttpStatus;
 
