@@ -33,8 +33,6 @@ public class Empleado {
     private String estrategia;
     @Column(name = "EMPESTRATEGIAGLOBAL")
     private String estrategiaGlobal;
-    @Column(name = "EMPPERFIL")
-    private String perfil;
     @Column(name = "EMPESTATUS")
     private String estatus;
     @Column(name = "EMPFECHAINGRESO")
@@ -51,4 +49,12 @@ public class Empleado {
     @ManyToOne
     @JoinColumn(name = "IDEMPLEADOTIPO", nullable = false)
     private TipoEmpleado tipoEmpleado;
+
+    @ManyToOne
+    @JoinColumn(name = "idPerfil", nullable = false)
+    private Perfil perfil;
+
+    @ManyToOne
+    @JoinColumn(name = "idEstatus", nullable = false)
+    private EstatusEmpleado estatusEmpleado;
 }
