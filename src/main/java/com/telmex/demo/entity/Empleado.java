@@ -33,14 +33,13 @@ public class Empleado {
     private String estrategia;
     @Column(name = "EMPESTRATEGIAGLOBAL")
     private String estrategiaGlobal;
-    @Column(name = "EMPESTATUS")
-    private String estatus;
+    //@Column(name = "EMPESTATUS")
+    //private String estatus;
     @Column(name = "EMPFECHAINGRESO")
     private Date fechaIngreso;
     @Column(name = "EMPFECHABAJA")
     private Date fechaBaja;
-    @Column(name = "EMPGENERO")
-    private String genero;
+
     @Column(name = "IEMPRFC")
     private String rfc;
     @Column(name = "EMPFECHANACIMIENTO")
@@ -57,4 +56,8 @@ public class Empleado {
     @ManyToOne
     @JoinColumn(name = "idEstatus", nullable = false)
     private EstatusEmpleado estatusEmpleado;
+
+    @ManyToOne
+    @JoinColumn(name = "idGenero", nullable = false)
+    private Genero genero;
 }

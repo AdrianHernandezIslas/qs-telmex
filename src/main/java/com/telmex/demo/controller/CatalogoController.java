@@ -33,4 +33,44 @@ public class CatalogoController {
         customResponse.setData(data);
         return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
     }
+
+    @GetMapping("/perfil")
+    public ResponseEntity<CustomResponse> getAllPerfil(){
+        CustomResponse customResponse = new CustomResponse.CustomResponseBuilder(HttpStatus.OK).builder();
+        List data = catalogoService.findAllPerfil();
+        customResponse.setData(data);
+        return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
+    }
+
+    @GetMapping("/genero")
+    public ResponseEntity<CustomResponse> getAllGenero(){
+        CustomResponse customResponse = new CustomResponse.CustomResponseBuilder(HttpStatus.OK).builder();
+        List data = catalogoService.findAllGenero();
+        customResponse.setData(data);
+        return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
+    }
+
+    @GetMapping("/tipo_cliente")
+    public ResponseEntity<CustomResponse> getAllTipoCliente(){
+        CustomResponse customResponse = new CustomResponse.CustomResponseBuilder(HttpStatus.OK).builder();
+        List data = catalogoService.findAllTipoCliente();
+        customResponse.setData(data);
+        return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
+    }
+
+    @GetMapping("/tipo_servicio")
+    public ResponseEntity<CustomResponse> getAllTipoServicio(){
+        CustomResponse customResponse = new CustomResponse.CustomResponseBuilder(HttpStatus.OK).builder();
+        List data = catalogoService.findAllTipoServicio();
+        customResponse.setData(data);
+        return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
+    }
+
+    @GetMapping("/porcentaje-comision")
+    public ResponseEntity<CustomResponse> getAllPorcentajeComision(){
+        CustomResponse customResponse = new CustomResponse.CustomResponseBuilder(HttpStatus.OK).builder();
+        List data = catalogoService.findAllPorcentajeComision();
+        customResponse.setData(data);
+        return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
+    }
 }
