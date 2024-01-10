@@ -1,7 +1,6 @@
 package com.telmex.demo.service.implement;
 
-import com.telmex.demo.entity.EstatusEmpleado;
-import com.telmex.demo.entity.TipoEmpleado;
+import com.telmex.demo.entity.*;
 import com.telmex.demo.service.CatalogoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +25,31 @@ public class CatalogoServiceImpl implements CatalogoService {
     @Override
     public List<EstatusEmpleado> findAllEstatusEmpleado() {
         return getCurrentSession().createQuery(PREFIX_QUERY_SELECT.concat(EstatusEmpleado.class.getName())).getResultList();
+    }
+
+    @Override
+    public List<Perfil> findAllPerfil() {
+        return getCurrentSession().createQuery(PREFIX_QUERY_SELECT.concat(Perfil.class.getName())).getResultList();
+    }
+
+    @Override
+    public List<Genero> findAllGenero() {
+         return getCurrentSession().createQuery(PREFIX_QUERY_SELECT.concat(Genero.class.getName())).getResultList();
+    }
+
+    @Override
+    public List<TipoCliente> findAllTipoCliente() {
+        return getCurrentSession().createQuery(PREFIX_QUERY_SELECT.concat(TipoCliente.class.getName())).getResultList();
+    }
+
+    @Override
+    public List<TipoServicio> findAllTipoServicio() {
+        return getCurrentSession().createQuery(PREFIX_QUERY_SELECT.concat(TipoServicio.class.getName())).getResultList();
+    }
+
+    @Override
+    public List<PorcentajeComision> findAllPorcentajeComision() {
+        return getCurrentSession().createQuery(PREFIX_QUERY_SELECT.concat(PorcentajeComision.class.getName())).getResultList();
     }
 
     protected EntityManager getCurrentSession() {
