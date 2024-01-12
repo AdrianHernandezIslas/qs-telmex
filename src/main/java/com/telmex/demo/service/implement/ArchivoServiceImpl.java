@@ -17,6 +17,7 @@ import com.telmex.demo.service.ExcelReaderService;
 import com.telmex.demo.service.external.sftp.FtpService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -51,7 +52,8 @@ public class ArchivoServiceImpl implements ArchivoService {
     }
 
 
-    private void procesarArchivo(String nameFile, EstadoCuenta estadoCuenta)  {
+    @Async
+    public void procesarArchivo(String nameFile, EstadoCuenta estadoCuenta)  {
         Thread hilo = new Thread(){
             @Override
             public void run() {
@@ -78,7 +80,8 @@ public class ArchivoServiceImpl implements ArchivoService {
         hilo.start();
     }
 
-    private void createEstadoCuentaDetalle(BookDto<SheetDto<RowEstadoCuenta>> book, EstadoCuenta estadoCuenta) {
+    @Async
+    public void createEstadoCuentaDetalle(BookDto<SheetDto<RowEstadoCuenta>> book, EstadoCuenta estadoCuenta) {
         List<RowEstadoCuenta> list = book.getSheets().get(0).getRows();
         estadoCuentaDetalleMapper.setEstadoCuenta(estadoCuenta);
         Set<EstadoCuentaDetalle> detalleEstadoCuenta = estadoCuentaDetalleMapper.map(list);
