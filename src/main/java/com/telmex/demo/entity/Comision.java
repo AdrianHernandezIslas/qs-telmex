@@ -17,7 +17,7 @@ public class Comision {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column()
 	private Integer idComision;
-	private Integer velocidad;
+	private String velocidad;
 	private String paquete;
 	private Double renta;
 	private Double posteo;
