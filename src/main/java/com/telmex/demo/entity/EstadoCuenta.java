@@ -24,6 +24,6 @@ public class EstadoCuenta {
     @JoinColumn(name = "idEstatusCarga", nullable = false)
     private EstatusCarga estatusCarga;
 
-    @OneToMany(mappedBy = "estadoCuenta")
-    private Set<EstadoCuentaDetalle> detalleCuenta;
+    //@OneToMany(mappedBy = "estadoCuenta")
+    //private Set<EstadoCuentaDetalle> detalleCuenta;
 }

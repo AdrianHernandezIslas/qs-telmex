@@ -1,5 +1,6 @@
 package com.telmex.demo.controller;
 
+import com.telmex.demo.dto.CustomResponse;
 import com.telmex.demo.entity.EstadoCuenta;
 import com.telmex.demo.entity.EstatusCarga;
 import com.telmex.demo.service.EstadoCuentaService;
@@ -9,10 +10,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/api/cuenta")
+@RequestMapping(value = "/api/v1/cuenta")
 public class EstadoCuentaController {
 
     @Autowired
@@ -27,9 +29,13 @@ public class EstadoCuentaController {
 
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "detalle/{idEstadoCuenta}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<EstadoCuenta> getDetalle(@PathVariable(value = "idEstadoCuenta") Integer idEstadoCuenta){
-        Optional<EstadoCuenta> estadoCuenta =estadoCuentaService.get(idEstadoCuenta);
-        return ResponseEntity.of(estadoCuenta);
+    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<CustomResponse> getAllEstadoCuenta(){
+        CustomResponse customResponse = new CustomResponse.CustomResponseBuilder(HttpStatus.OK).builder();
+        List data = estadoCuentaService.getAll();
+        customResponse.setData(data);
+        return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
     }
+
+
 }
