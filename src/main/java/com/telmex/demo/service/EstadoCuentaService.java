@@ -1,9 +1,11 @@
 package com.telmex.demo.service;
 
+import com.telmex.demo.entity.Comision;
 import com.telmex.demo.entity.EstadoCuenta;
 import com.telmex.demo.entity.EstadoCuentaDetalle;
 import com.telmex.demo.entity.EstatusCarga;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +21,11 @@ public interface EstadoCuentaService {
 
     Optional<EstadoCuenta> get(Integer idEstadoCuenta);
 
-    List<EstadoCuenta> getAll();
+    Page<EstadoCuenta> getAll(Pageable page);
+
+    EstadoCuenta update(EstadoCuenta estadoCuenta);
+
+    void delete(Integer idEstadoCuenta);
 
 
     Optional<EstatusCarga> ckeckEstatus(Integer idEstadoCuenta);
