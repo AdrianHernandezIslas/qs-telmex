@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.telmex.demo.service.ComisionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.telmex.demo.entity.Comision;
@@ -21,8 +23,8 @@ public class ComisionServiceImpl implements ComisionService {
 	}
 
 	@Override
-	public List<Comision> getAll() {
-		return comisionRepository.findAll();
+	public Page<Comision> getAll(Pageable page) {
+		return comisionRepository.findAll(page);
 	}
 
 	@Override

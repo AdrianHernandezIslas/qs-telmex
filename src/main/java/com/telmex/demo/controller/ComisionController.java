@@ -1,11 +1,14 @@
 package com.telmex.demo.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.telmex.demo.dto.CustomResponse;
 import com.telmex.demo.entity.Comision;
 import com.telmex.demo.service.ComisionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,10 +30,12 @@ public class ComisionController{
 	}
 
 	@GetMapping("/")
-	public ResponseEntity<CustomResponse> getAll(){
+	public ResponseEntity<CustomResponse> getAll(@RequestParam(defaultValue = "1") int page,
+												 @RequestParam(defaultValue = "10") int size){
 		CustomResponse customResponse = new CustomResponse.CustomResponseBuilder(HttpStatus.OK).builder();
-		List<Comision> data = comisionService.getAll();
-		customResponse.setData(data);
+		PageRequest pr = PageRequest.of(page, size);
+		Page<Comision> data = comisionService.getAll(pr);
+		customResponse.setData(Optional.of(data));
 		return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
 	}
 
