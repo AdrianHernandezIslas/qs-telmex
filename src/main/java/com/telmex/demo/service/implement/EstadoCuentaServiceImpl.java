@@ -8,6 +8,8 @@ import com.telmex.demo.repository.EstadoCuentaDetalleRepository;
 import com.telmex.demo.repository.EstadoCuentaRepository;
 import com.telmex.demo.service.EstadoCuentaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -42,11 +44,19 @@ public class EstadoCuentaServiceImpl implements EstadoCuentaService {
     }
 
     @Override
-    public List<EstadoCuenta> getAll() {
-        return estadoCuentaRepository.findAll();
+    public Page<EstadoCuenta> getAll(Pageable page) {
+        return estadoCuentaRepository.findAll(page);
     }
 
+    @Override
+    public EstadoCuenta update(EstadoCuenta estadoCuenta) {
+        return estadoCuentaRepository.save(estadoCuenta);
+    }
 
+    @Override
+    public void delete(Integer idEstadoCuenta) {
+        estadoCuentaRepository.deleteById(idEstadoCuenta);
+    }
 
     @Override
     public Optional<EstatusCarga> ckeckEstatus(Integer idEstadoCuenta) {
