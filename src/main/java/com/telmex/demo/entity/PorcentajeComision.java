@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Table(name = "porcentajecomision")
 public class PorcentajeComision {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column()
     private Integer idPorcentajeComision;
     private String porcentajeComision;

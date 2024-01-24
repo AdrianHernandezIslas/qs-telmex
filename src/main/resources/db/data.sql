@@ -1,0 +1,18 @@
+DELETE FROM rhmempleadoperfil;
+INSERT INTO rhmempleadoperfil (perfil) VALUES('Promotor'),('Cliente');
+DELETE FROM rhmgenero;
+INSERT INTO rhmgenero (genero) VALUES('Masculino'),('Femenino');
+DELETE FROM tipocliente;
+INSERT INTO tipocliente (tipo_cliente) VALUES('Externo'),('Interno');
+DELETE FROM tiposervicio;
+INSERT INTO tiposervicio (tipo_servicio) VALUES('Basico'),('Premium');
+DELETE FROM rhmempleadotipo;
+INSERT INTO rhmempleadotipo (empleadotipo) VALUES('Promotor'),('Gerente');
+DELETE FROM rhmempleadoperfil;
+INSERT INTO rhmempleadoperfil (perfil) VALUES('General'),('Ventas');
+DELETE FROM rhmempleadoestatus;
+INSERT INTO rhmempleadoestatus (estatus) VALUES('Activo'),('Inactivo');
+DELETE FROM porcentajecomision;
+INSERT INTO porcentajecomision (porcentaje_comision) VALUES('10'),('20');
+DELETE FROM lytestadocuentastatus;
+INSERT INTO lytestadocuentastatus (id_estatus_carga,estatus_carga) VALUES (1,'Iniciado'),(2,'Procesando'),(3,'Finalizado'),(4,'Fallido'),(5,'Archivo No Encontrado');

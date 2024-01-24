@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Table(name = "RHMGENERO")
 public class Genero {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column()
     private Integer idGenero;
     @Column()
