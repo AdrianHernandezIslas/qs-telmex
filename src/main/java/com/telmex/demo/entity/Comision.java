@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class Comision {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column()
 	private Integer idComision;
 	private String velocidad;

@@ -15,7 +15,7 @@ public class SftpConfig {
     private String username;
     @Value("${remote.sftp.host}")
     private String remoteHost;
-    @Value("${remote.sftp.passwrod}")
+    @Value("${remote.sftp.password}")
     private String password;
 
     @Bean

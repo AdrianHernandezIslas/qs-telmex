@@ -11,6 +11,17 @@ services:
       - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
     volumes:
       - db:/var/lib/mysql
+  ftp-server:
+    container_name: ftp-comisiones
+    environment:
+      - FTP_PASS=$FTP_PASS
+      - FTP_USER=$FTP_USER
+    image: garethflowers/ftp-server
+    ports:
+      - '20-21:20-21/tcp'
+      - '40000-40009:40000-40009/tcp'
+    volumes:
+      - '/data:/home/user'
 
   app:
     depends_on:
@@ -18,7 +29,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    restart: no
+    restart: on-failure
     env_file: ./.env
     ports:
       - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
@@ -28,7 +39,12 @@ services:
              "spring.datasource.username" : "$MYSQLDB_USER",
              "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD",
              "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
-             "spring.jpa.hibernate.ddl-auto" : "update"
+             "spring.jpa.hibernate.ddl-auto" : "update",
+             "remote.sftp.host" : "$FTP_USER",
+             "remote.sftp.username" : "$FTP_HOST",
+             "remote.sftp.password" : "$FTP_PASS",
+             "spring.datasource.initialization-mode" : "always",
+             "spring.datasource.data" : "classpath:db/data.sql"
            }'
     #volumes:
       #- .m2:/root/.m2

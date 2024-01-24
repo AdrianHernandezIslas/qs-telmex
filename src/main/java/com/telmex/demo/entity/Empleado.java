@@ -14,7 +14,7 @@ import java.util.Date;
 @Table(name = "RHMEMPLEADO")
 public class Empleado {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDEMPLEADO")
     private Integer idEmpleado;
     @Column(name = "EMPNUMERO")
