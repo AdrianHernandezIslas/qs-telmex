@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "comision")
+@Table(name = "lyt_comision")
 public class Comision {
 
 	@Id

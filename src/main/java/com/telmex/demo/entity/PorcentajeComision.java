@@ -10,11 +10,11 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "porcentajecomision")
+@Table(name = "lyt_comisionporcentajecat")
 public class PorcentajeComision {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column()
     private Integer idPorcentajeComision;
-    private String porcentajeComision;
+    private String aliasPorcentajeComision;
 }

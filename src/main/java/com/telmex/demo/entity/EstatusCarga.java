@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "LYTESTADOCUENTASTATUS")
+@Table(name = "LYT_ESTADOCUENTASTATUS")
 public class EstatusCarga {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

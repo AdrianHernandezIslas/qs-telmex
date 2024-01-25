@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.Optional;
 
 @Entity
-@Table(name = "LYTESTADOCUENTADETALLE")
+@Table(name = "LYT_ESTADOCUENTADETALLE")
 public class EstadoCuentaDetalle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,8 +38,11 @@ public class EstadoCuentaDetalle {
     private Integer pagoPosteo;
     private Double importePosteo;
     private Date fechaIPosteo;
+    @Column(columnDefinition = "TEXT")
     private String pisaE;
+    @Column(columnDefinition = "TEXT")
     private String procede2;
+    @Column(columnDefinition = "TEXT")
     private String pago2;
     private Integer pagoBe;
     private Double importeBe;
@@ -53,63 +56,105 @@ public class EstadoCuentaDetalle {
     private Double pagoBcm;
     private Double importeBcm;
     private Date fechaIbcm;
+    @Column(columnDefinition = "TEXT")
     private String mesSol;
+    @Column(columnDefinition = "TEXT")
     private String fecha;
     private Integer osPago;
+    @Column(columnDefinition = "TEXT")
     private String telPago;
+    @Column(columnDefinition = "TEXT")
     private String area;
+    @Column(columnDefinition = "TEXT")
     private String division;
+    @Column(columnDefinition = "TEXT")
+
     private String subdireccion;
     private Integer difDias;
     private Double pagoTotal;
     private Double cantidad;
+    @Column(columnDefinition = "TEXT")
     private String empresa;
+    @Column(columnDefinition = "TEXT")
     private String observaciones;
     private Double importeOtros;
     private Date fechaIotros;
+    @Column(columnDefinition = "TEXT")
     private String pagoOtros;
     private Double otraCantidad;
+    @Column(columnDefinition = "TEXT")
     private String otrosDias;
+    @Column(columnDefinition = "TEXT")
     private String otrasVentas;
+    @Column(columnDefinition = "TEXT")
     private String dias;
+    @Column(columnDefinition = "TEXT")
     private String ventas;
+    @Column(columnDefinition = "TEXT")
     private String mesPisa;
+    @Column(columnDefinition = "TEXT")
     private String estatus;
+    @Column(columnDefinition = "TEXT")
     private String tipoLinea;
+    @Column(columnDefinition = "TEXT")
     private String lineaContratada;
+    @Column(columnDefinition = "TEXT")
     private String paquete;
+    @Column(columnDefinition = "TEXT")
     private String servicios;
+    @Column(columnDefinition = "TEXT")
     private String servicios2;
+    @Column(columnDefinition = "TEXT")
     private String duplicado;
+    @Column(columnDefinition = "TEXT")
     private String catalogoEmpresasProyecto;
+    @Column(columnDefinition = "TEXT")
     private String catalogoEstrategiasProyecto;
+    @Column(columnDefinition = "TEXT")
     private String catalogoEstrategiasEstatus;
+    @Column(columnDefinition = "TEXT")
     private String concepton;
+    @Column(columnDefinition = "TEXT")
     private String pagoBaseDescripcion;
+    @Column(columnDefinition = "TEXT")
     private String pagoPosteoDescripcion;
+    @Column(columnDefinition = "TEXT")
     private String rango;
+    @Column(columnDefinition = "TEXT")
     private String porcentajeComision;
+    @Column(columnDefinition = "TEXT")
     private String mes;
+    @Column(columnDefinition = "TEXT")
     private String porcentajeComisionTrans;
+    @Column(columnDefinition = "TEXT")
     private String comision3;
+
     private Integer pagoPagoCliente;
+    @Column(columnDefinition = "TEXT")
     private String pagoPagoClienteDescripcion;
     private Double importePagoCliente;
     private Date fechaPagoCliente;
+    @Column(columnDefinition = "TEXT")
     private String osPagoConversion;
+    @Column(columnDefinition = "TEXT")
     private String telPagoConversion;
+    @Column(columnDefinition = "TEXT")
     private String pisaEConversion;
+    @Column(columnDefinition = "TEXT")
     private String pagoPorta;
     private Integer pagoBonoZf;
+    @Column(columnDefinition = "TEXT")
     private String esConversion;
     private Integer pagoNavegacion;
     private Double importeNavegacion;
     private Date fechaNavegacion;
     private Integer navegaDwh;
+    @Column(columnDefinition = "TEXT")
     private String pagoChergeBk;
     private Double importeChargeBk;
     private Date fechaIChergeBk;
     private Integer importeChargeBkPgoCte;
+    @Column(columnDefinition = "TEXT")
     private String pagoChargeBkDescripcion;
 
 

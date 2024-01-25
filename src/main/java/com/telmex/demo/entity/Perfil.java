@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "RHMEMPLEADOPERFIL")
+@Table(name = "RHM_EMPLEADOPERFIL")
 public class Perfil {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

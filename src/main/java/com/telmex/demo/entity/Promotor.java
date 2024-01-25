@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-//@Table(name = "Promotor")
+@Table(name = "rhm_promotor")
 public class Promotor {
 
 	@Id

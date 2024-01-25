@@ -11,7 +11,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "LYTESTADOCUENTA")
+@Table(name = "LYT_ESTADOCUENTA")
 public class EstadoCuenta {
 
     @Id
