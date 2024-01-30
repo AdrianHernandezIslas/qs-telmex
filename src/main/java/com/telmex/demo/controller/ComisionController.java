@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.telmex.demo.dto.CustomResponse;
+import com.telmex.demo.dto.input.ComisionDTO;
 import com.telmex.demo.entity.Comision;
 import com.telmex.demo.service.ComisionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,13 @@ public class ComisionController{
 	public ResponseEntity<CustomResponse> delete(@PathVariable Integer idComision){
 		CustomResponse customResponse = new CustomResponse.CustomResponseBuilder(HttpStatus.OK).builder();
 		comisionService.delete(idComision);
+		return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
+	}
+
+	@PatchMapping("/procesar")
+	public ResponseEntity<CustomResponse> procesarComisiones(@RequestBody ComisionDTO comisionDTO){
+		CustomResponse customResponse = new CustomResponse.CustomResponseBuilder(HttpStatus.OK).builder();
+		comisionService.procesarComicionesFrom(comisionDTO);
 		return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
 	}
 }
