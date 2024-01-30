@@ -1,7 +1,9 @@
 package com.telmex.demo.service.implement;
 
+import java.util.Date;
 import java.util.List;
 
+import com.telmex.demo.dto.input.ComisionDTO;
 import com.telmex.demo.service.ComisionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,5 +42,15 @@ public class ComisionServiceImpl implements ComisionService {
 	@Override
 	public void delete(Integer idComision) {
 		comisionRepository.deleteById(idComision);
+	}
+
+	@Override
+	public void procesarComicionesFrom(ComisionDTO comisionDTO) {
+		comisionRepository.procesarComicionesFrom(
+				comisionDTO.getIdEstadoCuenta(),
+				comisionDTO.getIdEmpleado(),
+				new Date(),
+				comisionDTO.getVpAuditoria()
+		);
 	}
 }
