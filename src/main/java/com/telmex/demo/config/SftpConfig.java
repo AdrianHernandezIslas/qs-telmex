@@ -21,7 +21,7 @@ public class SftpConfig {
     @Bean
     public Session setupJsch() throws JSchException {
         JSch jsch = new JSch();
-        //jsch.setKnownHosts("/Users/john/.ssh/known_hosts");
+        jsch.setKnownHosts("/Users/john/.ssh/known_hosts");
         Session jschSession = jsch.getSession(username, remoteHost, 22);
         java.util.Properties config = new java.util.Properties();
         config.put("StrictHostKeyChecking", "no");
