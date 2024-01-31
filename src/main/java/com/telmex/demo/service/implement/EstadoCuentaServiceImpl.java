@@ -1,5 +1,6 @@
 package com.telmex.demo.service.implement;
 
+import com.google.common.collect.Lists;
 import com.telmex.demo.constants.EstadoCargaConstants;
 import com.telmex.demo.entity.EstadoCuenta;
 import com.telmex.demo.entity.EstadoCuentaDetalle;
@@ -68,7 +69,8 @@ public class EstadoCuentaServiceImpl implements EstadoCuentaService {
     @Async
     public void addDetalle(Set<EstadoCuentaDetalle> estadoCuentaDetalleSet) {
         Instant begin = Instant.now();
-        insertThread(estadoCuentaDetalleSet);
+        //insertThread(estadoCuentaDetalleSet);
+        insertData(estadoCuentaDetalleSet);
         Instant end = Instant.now();
         System.out.println("Elapsed Threads Time: " + Duration.between(begin, end).toString());
     }
@@ -80,7 +82,17 @@ public class EstadoCuentaServiceImpl implements EstadoCuentaService {
         estadoCuentaRepository.save(estadoCuenta);
     }
 
+    public void insertData(Set<EstadoCuentaDetalle> estadoCuentaDetalleSet){
+        List<EstadoCuentaDetalle> data = new ArrayList(estadoCuentaDetalleSet);
+        List<List<EstadoCuentaDetalle>> dataPaginated = Lists.partition(data,50);
+        dataPaginated.parallelStream().forEach(this::saveDetalle);
+    }
 
+    public void saveDetalle(List<EstadoCuentaDetalle> detalles){
+        estadoCuentaDetalleRepository.saveAll(detalles);
+    }
+
+/*
     @Async
     public void insertThread(Set<EstadoCuentaDetalle> estadoCuentaDetalleSet) {
         CountDownLatch latch = new CountDownLatch(estadoCuentaDetalleSet.size());
@@ -103,11 +115,11 @@ public class EstadoCuentaServiceImpl implements EstadoCuentaService {
         }
 
         System.out.println("End of Action Services");
-    }
+    }*/
 
 
 }
-
+/*
 class ActionService implements Runnable {
     private final CountDownLatch latch;
     private final EstadoCuentaDetalleRepository estadoCuentaDetalleRepository;
@@ -127,4 +139,4 @@ class ActionService implements Runnable {
     }
 
 
-}
+}*/
