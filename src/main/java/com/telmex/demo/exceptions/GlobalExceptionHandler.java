@@ -2,13 +2,20 @@ package com.telmex.demo.exceptions;
 
 import com.telmex.demo.dto.CustomResponse;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -18,6 +25,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         CustomResponse customResponse = new  CustomResponse.CustomResponseBuilder(HttpStatus.CONFLICT).builder();
         customResponse.setMessage(exception.getCause().getCause().getMessage());
         response.setStatus(customResponse.getHttpStatus().value());
+        return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        CustomResponse customResponse = new  CustomResponse.CustomResponseBuilder(HttpStatus.BAD_REQUEST).builder();
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        customResponse.setMessage("Los parametros enviados son incorrectos");
+        customResponse.setData(errors);
         return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
     }
 
