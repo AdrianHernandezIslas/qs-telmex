@@ -1,6 +1,9 @@
 package com.telmex.demo.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,12 +20,21 @@ public class Comision {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column()
 	private Integer idComision;
+	@NotNull
+	@NotBlank
 	private String velocidad;
+	@NotNull
+	@NotBlank
 	private String paquete;
+	@Min(value = 0)
 	private Double renta;
+	@Min(value = 0)
 	private Double posteo;
+	@Min(value = 0)
 	private Double navegacion;
+	@Min(value = 0)
 	private Double pagoCliente;
+	@Min(value = 0)
 	private Double total;
 	@ManyToOne
 	@JoinColumn(name = "idTipoCliente", nullable = false)
