@@ -74,9 +74,11 @@ public class ComisionController{
 	}
 
 	@GetMapping("/calculada")
-	public ResponseEntity<CustomResponse> obtenerComisioneCalculada(){
+	public ResponseEntity<CustomResponse> obtenerComisioneCalculada(@RequestParam(defaultValue = "1") int page,
+																	@RequestParam(defaultValue = "10") int size){
 		CustomResponse customResponse = new CustomResponse.CustomResponseBuilder(HttpStatus.OK).builder();
-		List data = comisionService.findAllComisionesCalculadas();
+		PageRequest pr = PageRequest.of(page, size);
+		Page data = comisionService.findAllComisionesCalculadas(pr);
 		customResponse.setData(data);
 		return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
 	}

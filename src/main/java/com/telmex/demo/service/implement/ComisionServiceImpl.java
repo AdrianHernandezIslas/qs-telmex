@@ -56,7 +56,7 @@ public class ComisionServiceImpl implements ComisionService {
 	}
 
 	@Override
-	public List<VwComisioneCalculada> findAllComisionesCalculadas() {
-		return comisionRepository.findAllComisionesCalculadas();
+	public Page<VwComisioneCalculada> findAllComisionesCalculadas(Pageable page) {
+		return comisionRepository.findAllComisionesCalculadas(page);
 	}
 }

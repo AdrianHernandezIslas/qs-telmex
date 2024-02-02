@@ -21,10 +21,8 @@ public class Comision {
 	@Column()
 	private Integer idComision;
 	@NotNull
-	@NotBlank
 	private String velocidad;
 	@NotNull
-	@NotBlank
 	private String paquete;
 	@Min(value = 0)
 	private Double renta;
