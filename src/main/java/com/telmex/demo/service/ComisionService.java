@@ -2,6 +2,7 @@ package com.telmex.demo.service;
 
 import com.telmex.demo.dto.input.ComisionDTO;
 import com.telmex.demo.entity.Comision;
+import com.telmex.demo.views.VwComisioneCalculada;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -20,4 +21,6 @@ public interface ComisionService {
      void delete(Integer idComision);
 
      void procesarComicionesFrom(ComisionDTO comisionDTO);
+
+     List<VwComisioneCalculada> findAllComisionesCalculadas();
 }
