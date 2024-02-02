@@ -30,5 +30,7 @@ public interface ComisionRepository extends JpaRepository<Comision, Integer> {
 
 
     @Query(value = COMISIONES_CALCULADAS_QUERY)
-    Page<VwComisioneCalculada> findAllComisionesCalculadas(Pageable pageable);
+    Page<VwComisioneCalculada> findAllComisionesCalculadas(Pageable pageable,
+                                                           @Param(ID_ESTADO_CUENTA_PARAM) String idEstadoCuenta,
+                                                           @Param(PAGO_CONCEPTO_PARAM) String pagoConcepto);
 }

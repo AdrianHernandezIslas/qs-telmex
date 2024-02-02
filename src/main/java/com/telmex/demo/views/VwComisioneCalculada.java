@@ -22,6 +22,7 @@ public class VwComisioneCalculada {
     @Id
     @Column(name = "idempleadocomision")
     private Integer idEmpleadoComision;
+    private Integer idEstadoCuenta;
     private BigDecimal montoPagadoConcepto;
     private BigDecimal montoEsperadoConcepto;
 

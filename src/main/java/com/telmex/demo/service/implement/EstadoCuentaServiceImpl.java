@@ -69,8 +69,10 @@ public class EstadoCuentaServiceImpl implements EstadoCuentaService {
     @Async
     public void addDetalle(Set<EstadoCuentaDetalle> estadoCuentaDetalleSet) {
         Instant begin = Instant.now();
-        //insertThread(estadoCuentaDetalleSet);
         insertData(estadoCuentaDetalleSet);
+        if(!estadoCuentaDetalleSet.isEmpty()){
+            updateStatusEstadoCuenta(estadoCuentaDetalleSet.iterator().next().getEstadoCuenta().getIdEstadoCuenta(),EstadoCargaConstants.FINALIZADO);
+        }
         Instant end = Instant.now();
         System.out.println("Elapsed Threads Time: " + Duration.between(begin, end).toString());
     }
