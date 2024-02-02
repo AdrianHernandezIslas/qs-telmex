@@ -22,5 +22,5 @@ public interface ComisionService {
 
      void procesarComicionesFrom(ComisionDTO comisionDTO);
 
-     List<VwComisioneCalculada> findAllComisionesCalculadas();
+     Page<VwComisioneCalculada> findAllComisionesCalculadas(Pageable page);
 }

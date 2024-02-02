@@ -1,6 +1,8 @@
 package com.telmex.demo.repository;
 
 import com.telmex.demo.views.VwComisioneCalculada;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -27,6 +29,6 @@ public interface ComisionRepository extends JpaRepository<Comision, Integer> {
                                 @Param(VP_AUDITORIA_PARAM) String vpAuditoria);
 
 
-    @Query(nativeQuery = true,value = COMISIONES_CALCULADAS_QUERY)
-    List<VwComisioneCalculada> findAllComisionesCalculadas();
+    @Query(value = COMISIONES_CALCULADAS_QUERY)
+    Page<VwComisioneCalculada> findAllComisionesCalculadas(Pageable pageable);
 }

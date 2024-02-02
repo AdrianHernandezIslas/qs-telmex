@@ -9,29 +9,31 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 @Entity
 @Immutable
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "vw_ComisionesCalculadas")
+@Table(name = "`vw_ComisionesCalculadas`")
 public class VwComisioneCalculada {
     @Id
-    @Column
+    @Column(name = "idempleadocomision")
     private Integer idEmpleadoComision;
-    private Double montoPagadoConcepto;
-    private Double montoEsperadoConcepto;
+    private BigDecimal montoPagadoConcepto;
+    private BigDecimal montoEsperadoConcepto;
 
-    private Double montoTotal;
+    private BigDecimal montoTotal;
 
     private String empnumero;
     private String empnombrecompleto;
-    private Integer idEstatus;
+    private BigInteger idEstatus;
 
     private String empclabeinterbancaria;
 
-    private String cuentabancaria;
+    private String empcuentabancaria;
 
     private String empestrategia;
 
