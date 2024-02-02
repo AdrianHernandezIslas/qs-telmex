@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.telmex.demo.dto.input.ComisionDTO;
 import com.telmex.demo.service.ComisionService;
+import com.telmex.demo.views.VwComisioneCalculada;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -52,5 +53,10 @@ public class ComisionServiceImpl implements ComisionService {
 				new Date(),
 				comisionDTO.getVpAuditoria()
 		);
+	}
+
+	@Override
+	public List<VwComisioneCalculada> findAllComisionesCalculadas() {
+		return comisionRepository.findAllComisionesCalculadas();
 	}
 }

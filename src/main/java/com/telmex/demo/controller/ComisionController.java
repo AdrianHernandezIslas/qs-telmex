@@ -72,4 +72,12 @@ public class ComisionController{
 		comisionService.procesarComicionesFrom(comisionDTO);
 		return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
 	}
+
+	@GetMapping("/calculada")
+	public ResponseEntity<CustomResponse> obtenerComisioneCalculada(){
+		CustomResponse customResponse = new CustomResponse.CustomResponseBuilder(HttpStatus.OK).builder();
+		List data = comisionService.findAllComisionesCalculadas();
+		customResponse.setData(data);
+		return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
+	}
 }
