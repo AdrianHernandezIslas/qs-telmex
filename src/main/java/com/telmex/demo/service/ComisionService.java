@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ComisionService {
 
@@ -22,5 +23,5 @@ public interface ComisionService {
 
      void procesarComicionesFrom(ComisionDTO comisionDTO);
 
-     Page<VwComisioneCalculada> findAllComisionesCalculadas(Pageable page);
+     Page<VwComisioneCalculada> findAllComisionesCalculadas(Pageable page, Optional<String> idEstadoCuenta, Optional<String> pagoConcepto);
 }

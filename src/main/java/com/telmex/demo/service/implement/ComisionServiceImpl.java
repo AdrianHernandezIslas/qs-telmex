@@ -2,6 +2,7 @@ package com.telmex.demo.service.implement;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import com.telmex.demo.dto.input.ComisionDTO;
 import com.telmex.demo.service.ComisionService;
@@ -56,7 +57,9 @@ public class ComisionServiceImpl implements ComisionService {
 	}
 
 	@Override
-	public Page<VwComisioneCalculada> findAllComisionesCalculadas(Pageable page) {
-		return comisionRepository.findAllComisionesCalculadas(page);
+	public Page<VwComisioneCalculada> findAllComisionesCalculadas(Pageable page,Optional<String> idEstadoCuenta,Optional<String> pagoConcepto) {
+		String idEstadoCuentaValue = idEstadoCuenta.isPresent() ? idEstadoCuenta.get():"%%";
+		String pagoConceptoValue = pagoConcepto.isPresent()?pagoConcepto.get():"%%";
+		return comisionRepository.findAllComisionesCalculadas(page,idEstadoCuentaValue,pagoConceptoValue);
 	}
 }
