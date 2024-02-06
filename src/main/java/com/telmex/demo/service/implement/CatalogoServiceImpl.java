@@ -52,6 +52,11 @@ public class CatalogoServiceImpl implements CatalogoService {
         return getCurrentSession().createQuery(PREFIX_QUERY_SELECT.concat(PorcentajeComision.class.getName())).getResultList();
     }
 
+    @Override
+    public List<PagoConcepto> findAllPagoConcepto() {
+        return getCurrentSession().createQuery(PREFIX_QUERY_SELECT.concat(PagoConcepto.class.getName())).getResultList();
+    }
+
     protected EntityManager getCurrentSession() {
         return entityManagerFactory.createEntityManager();
     }

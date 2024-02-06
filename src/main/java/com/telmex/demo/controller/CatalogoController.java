@@ -73,4 +73,12 @@ public class CatalogoController {
         customResponse.setData(data);
         return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
     }
+
+    @GetMapping("/pago-concepto")
+    public ResponseEntity<CustomResponse> getAllPagoConcepto(){
+        CustomResponse customResponse = new CustomResponse.CustomResponseBuilder(HttpStatus.OK).builder();
+        List data = catalogoService.findAllPagoConcepto();
+        customResponse.setData(data);
+        return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
+    }
 }

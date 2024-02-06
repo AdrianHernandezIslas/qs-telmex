@@ -19,4 +19,6 @@ public interface CatalogoService {
     List<TipoServicio> findAllTipoServicio();
     List<PorcentajeComision> findAllPorcentajeComision();
 
+    List<PagoConcepto> findAllPagoConcepto();
+
 }
