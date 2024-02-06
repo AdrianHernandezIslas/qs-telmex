@@ -2,6 +2,7 @@ package com.telmex.demo.service.implement;
 
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
+import com.telmex.demo.components.SpeakerPublisher;
 import com.telmex.demo.constants.ArchivoContants;
 import com.telmex.demo.constants.EstadoCargaConstants;
 import com.telmex.demo.dto.RowEstadoCuenta;
@@ -11,10 +12,13 @@ import com.telmex.demo.dto.mapper.EstadoCuentaDetalleMapper;
 import com.telmex.demo.entity.EstadoCuenta;
 import com.telmex.demo.entity.EstadoCuentaDetalle;
 
+import com.telmex.demo.models.SpeechEvent;
 import com.telmex.demo.service.ArchivoService;
 import com.telmex.demo.service.EstadoCuentaService;
 import com.telmex.demo.service.ExcelReaderService;
 import com.telmex.demo.service.external.sftp.FtpService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.scheduling.annotation.Async;
@@ -42,6 +46,9 @@ public class ArchivoServiceImpl implements ArchivoService {
     private EstadoCuentaDetalleMapper estadoCuentaDetalleMapper;
     @Autowired
     private EstadoCuentaService estadoCuentaService;
+    @Autowired
+    private SpeakerPublisher speakerPublisher;
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
     public EstadoCuenta procesarArchivoEstadoCuenta(LocalDate fechaArchivo) {
@@ -59,21 +66,27 @@ public class ArchivoServiceImpl implements ArchivoService {
             public void run() {
                 try {
                     estadoCuentaService.updateStatusEstadoCuenta(estadoCuenta.getIdEstadoCuenta(),EstadoCargaConstants.INICIADO);
-                    System.out.println("Inicia obtener archivo");
+                    speakerPublisher.speak(new SpeechEvent<EstadoCuenta>(this,estadoCuenta,1));
+                    logger.info("Inicia obtener archivo");
                     Instant begin = Instant.now();
                     File file = ftpService.getFile(nameFile);
+                    logger.info("Termina obtener archivo");
                     estadoCuentaService.updateStatusEstadoCuenta(estadoCuenta.getIdEstadoCuenta(),EstadoCargaConstants.PROCESANDO);
+                    estadoCuenta.setEstatusCarga(EstadoCargaConstants.PROCESANDO);
+                    speakerPublisher.speak(new SpeechEvent<EstadoCuenta>(this,estadoCuenta,1));
                     BookDto<SheetDto<RowEstadoCuenta>> book = excelReaderService.getFileEstadoCuenta(file);
                     createEstadoCuentaDetalle(book, estadoCuenta);
                     ftpService.chanelExit();
                     Instant end = Instant.now();
-                    System.out.println("Elapsed Time: " + Duration.between(begin, end).toString());
+                    logger.info("Termina procesar archivo: " + Duration.between(begin, end).toString());
                 }catch (JSchException | SftpException e) {
-                    System.out.println(e);
+                    logger.error("Error al obtener archivo {}",e);
                     estadoCuentaService.updateStatusEstadoCuenta(estadoCuenta.getIdEstadoCuenta(),EstadoCargaConstants.ARCHIVO_NO_ENCONTRADO);
+                    speakerPublisher.speak(new SpeechEvent<EstadoCuenta>(this,estadoCuenta,1));
                 }  catch (IOException e) {
-                    System.out.println(e);
+                    logger.error("Error al obtener archivo {}",e);
                     estadoCuentaService.updateStatusEstadoCuenta(estadoCuenta.getIdEstadoCuenta(),EstadoCargaConstants.FALLIDO);
+                    speakerPublisher.speak(new SpeechEvent<EstadoCuenta>(this,estadoCuenta,1));
                 }
             }
         };
