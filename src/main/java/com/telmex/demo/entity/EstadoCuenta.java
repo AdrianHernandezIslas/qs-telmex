@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Set;
 
 @Entity
@@ -23,6 +25,14 @@ public class EstadoCuenta {
     @ManyToOne
     @JoinColumn(name = "idEstatusCarga", nullable = false)
     private EstatusCarga estatusCarga;
+
+    private BigInteger totalRegistros;
+    private BigDecimal montoTotal;
+    private BigDecimal montoPosteo;
+    private BigDecimal montoNavegacion;
+    private BigDecimal montoCliente;
+    private BigDecimal montoChargeBk;
+    private BigDecimal montoOtros;
 
     //@OneToMany(mappedBy = "estadoCuenta")
     //private Set<EstadoCuentaDetalle> detalleCuenta;
