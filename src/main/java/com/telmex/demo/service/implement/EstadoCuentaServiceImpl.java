@@ -1,13 +1,17 @@
 package com.telmex.demo.service.implement;
 
 import com.google.common.collect.Lists;
+import com.telmex.demo.components.SpeakerPublisher;
 import com.telmex.demo.constants.EstadoCargaConstants;
 import com.telmex.demo.entity.EstadoCuenta;
 import com.telmex.demo.entity.EstadoCuentaDetalle;
 import com.telmex.demo.entity.EstatusCarga;
+import com.telmex.demo.models.SpeechEvent;
 import com.telmex.demo.repository.EstadoCuentaDetalleRepository;
 import com.telmex.demo.repository.EstadoCuentaRepository;
 import com.telmex.demo.service.EstadoCuentaService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +36,11 @@ public class EstadoCuentaServiceImpl implements EstadoCuentaService {
 
     @Autowired
     private EstadoCuentaDetalleRepository estadoCuentaDetalleRepository;
+
+    @Autowired
+    private SpeakerPublisher speakerPublisher;
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
     public EstadoCuenta create(EstadoCuenta estadoCuenta) {
@@ -71,10 +80,13 @@ public class EstadoCuentaServiceImpl implements EstadoCuentaService {
         Instant begin = Instant.now();
         insertData(estadoCuentaDetalleSet);
         if(!estadoCuentaDetalleSet.isEmpty()){
-            updateStatusEstadoCuenta(estadoCuentaDetalleSet.iterator().next().getEstadoCuenta().getIdEstadoCuenta(),EstadoCargaConstants.FINALIZADO);
+            EstadoCuenta ec = estadoCuentaDetalleSet.iterator().next().getEstadoCuenta();
+            ec.setEstatusCarga(EstadoCargaConstants.FINALIZADO);
+            speakerPublisher.speak(new SpeechEvent<EstadoCuenta>(this,ec,1));
+            updateStatusEstadoCuenta(ec.getIdEstadoCuenta(),EstadoCargaConstants.FINALIZADO);
         }
         Instant end = Instant.now();
-        System.out.println("Elapsed Threads Time: " + Duration.between(begin, end).toString());
+        logger.info("Termina agregar detalle : " + Duration.between(begin, end).toString());
     }
 
     @Override
@@ -85,60 +97,15 @@ public class EstadoCuentaServiceImpl implements EstadoCuentaService {
     }
 
     public void insertData(Set<EstadoCuentaDetalle> estadoCuentaDetalleSet){
+        logger.info("Inicia insertar detalle : ");
         List<EstadoCuentaDetalle> data = new ArrayList(estadoCuentaDetalleSet);
         List<List<EstadoCuentaDetalle>> dataPaginated = Lists.partition(data,50);
         dataPaginated.parallelStream().forEach(this::saveDetalle);
+        logger.info("Termina insertar detalle : ");
     }
 
     public void saveDetalle(List<EstadoCuentaDetalle> detalles){
         estadoCuentaDetalleRepository.saveAll(detalles);
     }
 
-/*
-    @Async
-    public void insertThread(Set<EstadoCuentaDetalle> estadoCuentaDetalleSet) {
-        CountDownLatch latch = new CountDownLatch(estadoCuentaDetalleSet.size());
-        ExecutorService executor = Executors.newFixedThreadPool(estadoCuentaDetalleSet.size());
-        estadoCuentaDetalleSet.forEach((estadoCuentaDetalle) -> {
-            executor.execute(new ActionService(latch, estadoCuentaDetalleRepository, estadoCuentaDetalle));
-        });
-        executor.shutdown();
-
-        try {
-            Instant begin = Instant.now();
-            latch.await();
-            updateStatusEstadoCuenta(estadoCuentaDetalleSet.iterator().next().getEstadoCuenta().getIdEstadoCuenta(), EstadoCargaConstants.FINALIZADO);
-            Instant end = Instant.now();
-            System.out.println("Elapsed INSERT Time: " + Duration.between(begin, end).toString());
-
-        } catch (InterruptedException ex) {
-            updateStatusEstadoCuenta(estadoCuentaDetalleSet.iterator().next().getEstadoCuenta().getIdEstadoCuenta(), EstadoCargaConstants.FALLIDO);
-            System.out.println(ex);
-        }
-
-        System.out.println("End of Action Services");
-    }*/
-
-
 }
-/*
-class ActionService implements Runnable {
-    private final CountDownLatch latch;
-    private final EstadoCuentaDetalleRepository estadoCuentaDetalleRepository;
-
-    private final EstadoCuentaDetalle estadoCuentaDetalle;
-
-    public ActionService(CountDownLatch latch, EstadoCuentaDetalleRepository estadoCuentaDetalleRepository, EstadoCuentaDetalle estadoCuentaDetalle) {
-        this.latch = latch;
-        this.estadoCuentaDetalleRepository = estadoCuentaDetalleRepository;
-        this.estadoCuentaDetalle = estadoCuentaDetalle;
-    }
-
-    @Override
-    public void run() {
-        estadoCuentaDetalleRepository.save(estadoCuentaDetalle);
-        this.latch.countDown();
-    }
-
-
-}*/
