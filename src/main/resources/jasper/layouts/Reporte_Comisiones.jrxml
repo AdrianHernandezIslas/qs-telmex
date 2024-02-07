@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Reporte Comisiones" pageWidth="1800" pageHeight="2000" columnWidth="1800" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true">
+    <property name="ireport.zoom" value="2.143588810000004"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="0"/>
+    <parameter name="idEstadoCuenta" class="java.lang.String"/>
+    <parameter name="pagoConcepto" class="java.lang.String"/>
+    <parameter name="idTipoEmpleado" class="java.lang.String"/>
+    <queryString>
+        <![CDATA[SELECT * FROM vw_comisiones_calculadas v
+WHERE CONCAT(v.id_estado_cuenta,'') LIKE $P{idEstadoCuenta}
+AND v.pagoconcepto LIKE $P{pagoConcepto}
+AND CONCAT(v.idempleadotipo,'') LIKE $P{idTipoEmpleado}]]>
+    </queryString>
+    <field name="id_estado_cuenta" class="java.lang.Integer"/>
+    <field name="idempleadocomision" class="java.lang.Long"/>
+    <field name="monto_pagado_concepto" class="java.math.BigDecimal"/>
+    <field name="monto_esperado_concepto" class="java.math.BigDecimal"/>
+    <field name="monto_total" class="java.math.BigDecimal"/>
+    <field name="empnumero" class="java.lang.String"/>
+    <field name="empnombrecompleto" class="java.lang.String"/>
+    <field name="id_estatus" class="java.lang.Integer"/>
+    <field name="empclabeinterbancaria" class="java.lang.String"/>
+    <field name="empcuentabancaria" class="java.lang.String"/>
+    <field name="empestrategia" class="java.lang.String"/>
+    <field name="empestrategiaglobal" class="java.lang.String"/>
+    <field name="iemprfc" class="java.lang.String"/>
+    <field name="estatus" class="java.lang.String"/>
+    <field name="pagoconcepto" class="java.lang.String"/>
+    <field name="empleadotipo" class="java.lang.String"/>
+    <field name="idempleadotipo" class="java.lang.Integer"/>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <columnHeader>
+        <band height="27" splitType="Stretch">
+            <staticText>
+                <reportElement mode="Transparent" x="0" y="1" width="93" height="25"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
+                <text><![CDATA[ID ESTADO CUENTA]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Transparent" x="93" y="1" width="93" height="25"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
+                <text><![CDATA[ID EMPLEADO COM]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Transparent" x="186" y="1" width="93" height="25"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
+                <text><![CDATA[MONTO PAGO CONCEPTO]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Transparent" x="279" y="1" width="93" height="25"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
+                <text><![CDATA[MONTO ESPERADO CONCEPTO]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Transparent" x="372" y="1" width="93" height="25"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
+                <text><![CDATA[MONTO TOTAL]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Transparent" x="465" y="1" width="93" height="25"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
+                <text><![CDATA[NUMERO EMPLEADO]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Transparent" x="558" y="1" width="270" height="25"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
+                <text><![CDATA[NOMBRE EMPLEADO]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Transparent" x="828" y="1" width="93" height="25"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
+                <text><![CDATA[ID ESTADO]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Transparent" x="921" y="1" width="117" height="25"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
+                <text><![CDATA[CLABE INTERBANCARIA]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Transparent" x="1038" y="1" width="93" height="25"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
+                <text><![CDATA[CUENTA BANCARIA]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Transparent" x="1131" y="1" width="93" height="25"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
+                <text><![CDATA[ESTRATEGIA]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Transparent" x="1224" y="1" width="193" height="25"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
+                <text><![CDATA[ESTRATEGIA GLOBAL]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Transparent" x="1417" y="1" width="93" height="25"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
+                <text><![CDATA[RFC]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Transparent" x="1510" y="1" width="93" height="25"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
+                <text><![CDATA[ESTATUS]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Transparent" x="1603" y="1" width="93" height="25"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
+                <text><![CDATA[CONCEPTO PAGO]]></text>
+            </staticText>
+            <staticText>
+                <reportElement mode="Transparent" x="1696" y="1" width="104" height="25"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="8"/>
+                </textElement>
+                <text><![CDATA[TIPO EMPLEADO]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="32" splitType="Stretch">
+            <textField>
+                <reportElement x="0" y="0" width="93" height="32"/>
+                <textElement/>
+                <textFieldExpression><![CDATA[$F{id_estado_cuenta}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="93" y="0" width="93" height="32"/>
+                <textElement/>
+                <textFieldExpression><![CDATA[$F{idempleadocomision}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="186" y="0" width="93" height="32"/>
+                <textElement/>
+                <textFieldExpression><![CDATA[$F{monto_pagado_concepto}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="279" y="0" width="93" height="32"/>
+                <textElement/>
+                <textFieldExpression><![CDATA[$F{monto_esperado_concepto}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="372" y="0" width="93" height="32"/>
+                <textElement/>
+                <textFieldExpression><![CDATA[$F{monto_total}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="465" y="0" width="93" height="32"/>
+                <textElement/>
+                <textFieldExpression><![CDATA[$F{empnumero}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="558" y="0" width="270" height="32"/>
+                <textElement/>
+                <textFieldExpression><![CDATA[$F{empnombrecompleto}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="828" y="0" width="93" height="32"/>
+                <textElement/>
+                <textFieldExpression><![CDATA[$F{id_estatus}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="921" y="0" width="117" height="32"/>
+                <textElement/>
+                <textFieldExpression><![CDATA[$F{empclabeinterbancaria}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="1038" y="0" width="93" height="32"/>
+                <textElement/>
+                <textFieldExpression><![CDATA[$F{empcuentabancaria}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="1131" y="0" width="93" height="32"/>
+                <textElement/>
+                <textFieldExpression><![CDATA[$F{empestrategia}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="1224" y="0" width="193" height="32"/>
+                <textElement/>
+                <textFieldExpression><![CDATA[$F{empestrategiaglobal}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="1417" y="0" width="93" height="32"/>
+                <textElement/>
+                <textFieldExpression><![CDATA[$F{iemprfc}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="1510" y="0" width="93" height="32"/>
+                <textElement/>
+                <textFieldExpression><![CDATA[$F{estatus}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="1603" y="0" width="93" height="32"/>
+                <textElement/>
+                <textFieldExpression><![CDATA[$F{pagoconcepto}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="1696" y="0" width="104" height="32"/>
+                <textElement/>
+                <textFieldExpression><![CDATA[$F{empleadotipo}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>
