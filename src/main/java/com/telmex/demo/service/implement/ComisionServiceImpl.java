@@ -57,9 +57,10 @@ public class ComisionServiceImpl implements ComisionService {
 	}
 
 	@Override
-	public Page<VwComisioneCalculada> findAllComisionesCalculadas(Pageable page,Optional<String> idEstadoCuenta,Optional<String> pagoConcepto) {
-		String idEstadoCuentaValue = idEstadoCuenta.isPresent() ? idEstadoCuenta.get():"%%";
-		String pagoConceptoValue = pagoConcepto.isPresent()?pagoConcepto.get():"%%";
-		return comisionRepository.findAllComisionesCalculadas(page,idEstadoCuentaValue,pagoConceptoValue);
+	public Page<VwComisioneCalculada> findAllComisionesCalculadas(Pageable page,Optional<String> idEstadoCuenta,Optional<String> pagoConcepto,Optional<String> idTipoEmpleado) {
+		String idEstadoCuentaValue = idEstadoCuenta.orElse("%%");
+		String pagoConceptoValue = pagoConcepto.orElse("%%");
+		String idTipoEmpleadoValue = idTipoEmpleado.orElse("%%");
+		return comisionRepository.findAllComisionesCalculadas(page,idEstadoCuentaValue,pagoConceptoValue,idTipoEmpleadoValue);
 	}
 }

@@ -46,4 +46,8 @@ public class VwComisioneCalculada {
 
     private String pagoconcepto;
 
+    private String empleadotipo;
+
+    private Integer idempleadotipo;
+
 }

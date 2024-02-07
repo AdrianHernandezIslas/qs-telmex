@@ -23,5 +23,5 @@ public interface ComisionService {
 
      void procesarComicionesFrom(ComisionDTO comisionDTO);
 
-     Page<VwComisioneCalculada> findAllComisionesCalculadas(Pageable page, Optional<String> idEstadoCuenta, Optional<String> pagoConcepto);
+     Page<VwComisioneCalculada> findAllComisionesCalculadas(Pageable page, Optional<String> idEstadoCuenta, Optional<String> pagoConcepto,Optional<String> idTipoEmpleado);
 }
