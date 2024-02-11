@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/api/archivo")
+@RequestMapping(value = "/api/v1/archivo")
 public class ArchivoController {
 
     @Autowired
