@@ -15,7 +15,7 @@ import com.telmex.demo.entity.EstadoCuentaDetalle;
 import com.telmex.demo.models.SpeechEvent;
 import com.telmex.demo.service.ArchivoService;
 import com.telmex.demo.service.EstadoCuentaService;
-import com.telmex.demo.service.ExcelReaderService;
+import com.telmex.demo.components.ExcelReaderService;
 import com.telmex.demo.service.external.sftp.FtpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -20,7 +20,7 @@ public class UserInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private long id;
+    private long idUser;
     private String username;
     @JsonIgnore
     private String password;

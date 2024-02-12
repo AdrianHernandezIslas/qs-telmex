@@ -1,17 +1,18 @@
-package com.telmex.demo.service;
+package com.telmex.demo.components;
 
 import com.poiji.bind.Poiji;
 import com.poiji.option.PoijiOptions;
 import com.telmex.demo.dto.RowEstadoCuenta;
 import com.telmex.demo.dto.excel.BookDto;
 import com.telmex.demo.dto.excel.SheetDto;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+@Component
 public class ExcelReaderService {
 
 

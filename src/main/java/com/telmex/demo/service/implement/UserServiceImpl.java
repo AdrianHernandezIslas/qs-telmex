@@ -34,14 +34,6 @@ public class UserServiceImpl implements UserService {
         } else if(userRequest.getPassword() == null){
             throw new RuntimeException("Parameter password is not found in request..!!");
         }
-
-
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        UserDetails userDetail = (UserDetails) authentication.getPrincipal();
-//        String usernameFromAccessToken = userDetail.getUsername();
-//
-//        UserInfo currentUser = userRepository.findByUsername(usernameFromAccessToken);
-
         UserInfo savedUser = null;
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -51,9 +43,9 @@ public class UserServiceImpl implements UserService {
         UserInfo user = modelMapper.map(userRequest, UserInfo.class);
         user.setPassword(encodedPassword);
         if(userRequest.getId() != null){
-            UserInfo oldUser = userRepository.findFirstById(userRequest.getId());
+            UserInfo oldUser = userRepository.findFirstByIdUser(userRequest.getId());
             if(oldUser != null){
-                oldUser.setId(user.getId());
+                oldUser.setIdUser(user.getIdUser());
                 oldUser.setPassword(user.getPassword());
                 oldUser.setUsername(user.getUsername());
                 oldUser.setRoles(user.getRoles());
@@ -63,7 +55,6 @@ public class UserServiceImpl implements UserService {
                 throw new RuntimeException("Can't find record with identifier: " + userRequest.getId());
             }
         } else {
-//            user.setCreatedBy(currentUser);
             savedUser = userRepository.save(user);
         }
         UserResponse userResponse = modelMapper.map(savedUser, UserResponse.class);
