@@ -13,7 +13,7 @@ public class JwtSecurity {
 
     public ResponseCookie createCookie(String accessToken){
         return ResponseCookie.from("accessToken", accessToken)
-                .httpOnly(true)
+                .httpOnly(true).sameSite("Lax")
                 .secure(false)
                 .path("/")
                 .maxAge(cookieExpiry)
