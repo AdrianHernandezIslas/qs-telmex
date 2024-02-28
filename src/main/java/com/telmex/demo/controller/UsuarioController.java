@@ -37,7 +37,7 @@ public class UsuarioController {
     }
 
 
-    @PostMapping("/profile")
+    @GetMapping("/profile")
     public ResponseEntity<UserResponse> getUserProfile() {
         try {
             UserResponse userResponse = userService.getUser();

@@ -1,5 +1,6 @@
 package com.telmex.demo.dto;
 
+import com.telmex.demo.entity.Empleado;
 import com.telmex.demo.entity.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,4 +19,5 @@ public class UserRequest {
     private String username;
     private String password;
     private Set<UserRole> roles;
+    private Empleado empleado;
 }

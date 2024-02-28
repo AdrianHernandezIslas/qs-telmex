@@ -21,9 +21,13 @@ public class UserInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private long idUser;
+    @Column(unique = true,nullable = false)
     private String username;
     @JsonIgnore
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<UserRole> roles;
+    @ManyToOne
+    @JoinColumn(name = "idEmpleado", nullable = false)
+    private Empleado empleado;
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Data
@@ -25,15 +26,7 @@ public class Empleado extends BaseObject{
     @Column(name = "EMPNOMBRECOMPLETO")
     @NotNull
     private String nombreCompleto;
-    @Column(name = "EMPBANCO")
-    @NotNull
-    private String nombreBanco;
-    @Column(name = "EMPCLABEINTERBANCARIA")
-    @NotNull
-    private String clabeInterbancaria;
-    @NotNull
-    @Column(name = "EMPCUENTABANCARIA")
-    private String cuentaBancaria;
+
     @NotNull
     @Column(name = "EMPSUBGRUPO")
     private String subGrupo;
@@ -71,4 +64,8 @@ public class Empleado extends BaseObject{
     @ManyToOne
     @JoinColumn(name = "idGenero", nullable = false)
     private Genero genero;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "idempleado")
+    private Set<DatoBancarioEmpleado> detalleBancario;
 }

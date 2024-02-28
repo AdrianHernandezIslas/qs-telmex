@@ -3,6 +3,8 @@ package com.telmex.demo.dto;
 import com.telmex.demo.entity.UserInfo;
 import com.telmex.demo.entity.UserRole;
 import com.telmex.demo.entity.UserSession;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +16,8 @@ import java.util.List;
 public class CustomUserDetails extends UserInfo implements UserDetails {
 
     Collection<? extends GrantedAuthority> authorities;
+    @Getter
+    @Setter
     private UserSession session;
 
     public CustomUserDetails(UserInfo byUsername) {
@@ -56,10 +60,4 @@ public class CustomUserDetails extends UserInfo implements UserDetails {
         return true;
     }
 
-    public UserSession getSession() {
-        return session;
-    }
-    public void setSession(UserSession session) {
-        this.session = session;
-    }
 }
