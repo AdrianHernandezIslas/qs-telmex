@@ -1,11 +1,12 @@
 package com.telmex.demo.service;
 
 import com.telmex.demo.dto.AuthRequestDTO;
+import com.telmex.demo.dto.AuthSessionDTO;
 import org.springframework.security.core.Authentication;
+
+import javax.servlet.http.HttpServletRequest;
 
 public interface AuthService {
 
-    Authentication authenticate(AuthRequestDTO authRequestDTO);
-
-    String generateToken(String username);
+    AuthSessionDTO authenticate(AuthRequestDTO authRequestDTO, HttpServletRequest request);
 }

@@ -11,7 +11,7 @@ public interface CatalogoService {
 
     List<EstatusEmpleado> findAllEstatusEmpleado();
 
-    List<Perfil> findAllPerfil();
+    List<PerfilEmpleado> findAllPerfil();
 
     List<Genero> findAllGenero();
 

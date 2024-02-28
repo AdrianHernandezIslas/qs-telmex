@@ -1,4 +1,4 @@
-package com.telmex.demo.components;
+package com.telmex.demo.components.sessions;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;

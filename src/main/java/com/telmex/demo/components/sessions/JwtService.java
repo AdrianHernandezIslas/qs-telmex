@@ -1,4 +1,4 @@
-package com.telmex.demo.components;
+package com.telmex.demo.components.sessions;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -20,6 +20,8 @@ public class JwtService {
 
     public static final String SECRET = "357638792F423F4428472B4B6250655368566D597133743677397A2443264629";
 
+    private final String SUBJECT = "com.telmex.demo";
+
     @Value("${jwt.cookieExpiry}")
     private int cookieExpiry;
 
@@ -36,7 +38,7 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    private Claims extractAllClaims(String token) {
+    public Claims extractAllClaims(String token) {
         return Jwts
                 .parserBuilder()
                 .setSigningKey(getSignKey())
@@ -56,12 +58,9 @@ public class JwtService {
 
 
 
-    public String generateToken(String username){
-        Map<String, Object> claims = new HashMap<>();//Data Aditional
+    public String generateToken(String username,Map<String, Object> claims){
         return createToken(claims, username);
     }
-
-
 
     private String createToken(Map<String, Object> claims, String username) {
 

@@ -1,6 +1,9 @@
 package com.telmex.demo.filters;
 
-import com.telmex.demo.components.JwtService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.telmex.demo.components.sessions.JwtService;
+import com.telmex.demo.dto.CustomUserDetails;
+import com.telmex.demo.entity.UserSession;
 import com.telmex.demo.service.implement.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +19,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -48,8 +52,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         username = jwtService.extractUsername(token);
 
         if(username != null){
-            UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(username);
+            CustomUserDetails userDetails = (CustomUserDetails) userDetailsServiceImpl.loadUserByUsername(username);
             if(jwtService.validateToken(token, userDetails)){
+                Map<String,Object> payloadToken = jwtService.extractAllClaims(token);
+                UserSession userSession = new ObjectMapper().convertValue(payloadToken.get("session"),UserSession.class);
+                userDetails.setSession(userSession);
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);

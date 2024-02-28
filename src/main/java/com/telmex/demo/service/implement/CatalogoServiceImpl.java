@@ -28,8 +28,8 @@ public class CatalogoServiceImpl implements CatalogoService {
     }
 
     @Override
-    public List<Perfil> findAllPerfil() {
-        return getCurrentSession().createQuery(PREFIX_QUERY_SELECT.concat(Perfil.class.getName())).getResultList();
+    public List<PerfilEmpleado> findAllPerfil() {
+        return getCurrentSession().createQuery(PREFIX_QUERY_SELECT.concat(PerfilEmpleado.class.getName())).getResultList();
     }
 
     @Override

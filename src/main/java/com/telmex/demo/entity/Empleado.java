@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -14,13 +13,14 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "RHM_EMPLEADO")
-public class Empleado {
+public class Empleado extends BaseObject{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDEMPLEADO")
     private Integer idEmpleado;
-    @Column(name = "EMPNUMERO")
+
     @NotNull
+    @Column(name = "EMPNUMERO")
     private String numeroEmpleado;
     @Column(name = "EMPNOMBRECOMPLETO")
     @NotNull
@@ -46,7 +46,7 @@ public class Empleado {
     @NotNull
     @Column(name = "EMPFECHAINGRESO")
     private Date fechaIngreso;
-    @NotNull
+    //@NotNull
     @Column(name = "EMPFECHABAJA")
     private Date fechaBaja;
     @NotNull
@@ -62,7 +62,7 @@ public class Empleado {
 
     @ManyToOne
     @JoinColumn(name = "idPerfil", nullable = false)
-    private Perfil perfil;
+    private PerfilEmpleado perfil;
 
     @ManyToOne
     @JoinColumn(name = "idEstatus", nullable = false)

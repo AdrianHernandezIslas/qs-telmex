@@ -7,7 +7,7 @@ public class ComisionDTO {
 
     @NotNull
     private Long idEstadoCuenta;
-    @NotNull
+    //@NotNull
     private Integer idEmpleado;
     @NotNull
     private String vpAuditoria;
