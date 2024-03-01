@@ -19,42 +19,53 @@ public class CatalogoServiceImpl implements CatalogoService {
 
     @Override
     public List<TipoEmpleado> findAllTipoEmpleado() {
-        return getCurrentSession().createQuery(PREFIX_QUERY_SELECT.concat(TipoEmpleado.class.getName())).getResultList();
+        return findAll(TipoEmpleado.class);
     }
 
     @Override
     public List<EstatusEmpleado> findAllEstatusEmpleado() {
-        return getCurrentSession().createQuery(PREFIX_QUERY_SELECT.concat(EstatusEmpleado.class.getName())).getResultList();
+        return findAll(EstatusEmpleado.class);
     }
 
     @Override
     public List<PerfilEmpleado> findAllPerfil() {
-        return getCurrentSession().createQuery(PREFIX_QUERY_SELECT.concat(PerfilEmpleado.class.getName())).getResultList();
+        return findAll(PerfilEmpleado.class);
     }
 
     @Override
     public List<Genero> findAllGenero() {
-         return getCurrentSession().createQuery(PREFIX_QUERY_SELECT.concat(Genero.class.getName())).getResultList();
+         return findAll(Genero.class);
     }
 
     @Override
     public List<TipoCliente> findAllTipoCliente() {
-        return getCurrentSession().createQuery(PREFIX_QUERY_SELECT.concat(TipoCliente.class.getName())).getResultList();
+        return findAll(TipoCliente.class);
     }
 
     @Override
     public List<TipoServicio> findAllTipoServicio() {
-        return getCurrentSession().createQuery(PREFIX_QUERY_SELECT.concat(TipoServicio.class.getName())).getResultList();
+        return findAll(TipoServicio.class);
     }
 
     @Override
     public List<PorcentajeComision> findAllPorcentajeComision() {
-        return getCurrentSession().createQuery(PREFIX_QUERY_SELECT.concat(PorcentajeComision.class.getName())).getResultList();
+        return findAll(PorcentajeComision.class);
     }
 
     @Override
     public List<PagoConcepto> findAllPagoConcepto() {
-        return getCurrentSession().createQuery(PREFIX_QUERY_SELECT.concat(PagoConcepto.class.getName())).getResultList();
+        return findAll(PagoConcepto.class)
+    }
+
+    @Override
+    public List<UserRole> findAllRoles() {
+        return findAll(UserRole.class);
+    }
+
+    protected <T> List<T> findAll(Class<T> tClass){
+        String query = PREFIX_QUERY_SELECT.concat(tClass.getSimpleName());
+        return getCurrentSession().createQuery(query).getResultList();
+
     }
 
     protected EntityManager getCurrentSession() {

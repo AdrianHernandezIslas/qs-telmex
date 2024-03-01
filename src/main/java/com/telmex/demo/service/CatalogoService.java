@@ -21,4 +21,6 @@ public interface CatalogoService {
 
     List<PagoConcepto> findAllPagoConcepto();
 
+    List<UserRole> findAllRoles();
+
 }
