@@ -54,7 +54,7 @@ public class CatalogoServiceImpl implements CatalogoService {
 
     @Override
     public List<PagoConcepto> findAllPagoConcepto() {
-        return findAll(PagoConcepto.class)
+        return findAll(PagoConcepto.class);
     }
 
     @Override
