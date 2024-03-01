@@ -37,6 +37,6 @@ public class SseController extends BaseController {
     @GetMapping("/public")
     public void publisher(Principal principal){
         UserSession session = getSession(principal);
-        speakerPublisher.speak(new SpeechEvent(this,"Holi",session.getIdSesion()));
+        speakerPublisher.speak(new SpeechEvent(this,session,session.getIdSesion()));
     }
 }

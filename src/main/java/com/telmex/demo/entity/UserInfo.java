@@ -14,20 +14,29 @@ import java.util.Set;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user")
-public class UserInfo {
+@Table(name = "adm_usuario")
+public class UserInfo extends BaseObject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id_usuario")
     private long idUser;
-    @Column(unique = true,nullable = false)
+    @Column(name = "usuario", unique = true, nullable = false)
     private String username;
     @JsonIgnore
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "adm_usuariorol",
+            joinColumns = {
+                    @JoinColumn(name = "id_usuario")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "id_rol")
+            }
+    )
     private Set<UserRole> roles;
     @ManyToOne
-    @JoinColumn(name = "idEmpleado", nullable = false)
+    @JoinColumn(name = "idempleado", nullable = false)
     private Empleado empleado;
 }

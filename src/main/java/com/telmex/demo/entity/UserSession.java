@@ -13,18 +13,19 @@ import java.util.Date;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "session")
+@Table(name = "aud_sesion")
 public class UserSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column()
     private Long idSesion;
     private String ip;
+    @Column(name = "fecha_inicio")
     private Date fechaCreacion;
     private Date fechaFin;
     private Integer activa;
 
     @ManyToOne
-    @JoinColumn(name = "idUser", nullable = false)
+    @JoinColumn(name = "id_usuario", nullable = false)
     private UserInfo usuario;
 }

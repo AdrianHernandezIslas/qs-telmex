@@ -12,13 +12,16 @@ import javax.persistence.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "rol")
+@Table(name = "adm_rol")
 public class UserRole {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id_rol")
     private long idRole;
+    @Column(name = "rol")
     private String name;
+    @Column(name = "descripcion")
+    private String description;
 
 }
