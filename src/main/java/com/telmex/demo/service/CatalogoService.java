@@ -11,7 +11,7 @@ public interface CatalogoService {
 
     List<EstatusEmpleado> findAllEstatusEmpleado();
 
-    List<Perfil> findAllPerfil();
+    List<PerfilEmpleado> findAllPerfil();
 
     List<Genero> findAllGenero();
 
@@ -20,5 +20,7 @@ public interface CatalogoService {
     List<PorcentajeComision> findAllPorcentajeComision();
 
     List<PagoConcepto> findAllPagoConcepto();
+
+    List<UserRole> findAllRoles();
 
 }

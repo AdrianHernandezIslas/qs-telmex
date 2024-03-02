@@ -81,4 +81,12 @@ public class CatalogoController {
         customResponse.setData(data);
         return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
     }
+
+    @GetMapping("/rol")
+    public ResponseEntity<CustomResponse> getAllRol(){
+        CustomResponse customResponse = new CustomResponse.CustomResponseBuilder(HttpStatus.OK).builder();
+        List data = catalogoService.findAllRoles();
+        customResponse.setData(data);
+        return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
+    }
 }

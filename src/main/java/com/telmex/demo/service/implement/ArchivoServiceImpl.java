@@ -5,17 +5,18 @@ import com.jcraft.jsch.SftpException;
 import com.telmex.demo.components.SpeakerPublisher;
 import com.telmex.demo.constants.ArchivoContants;
 import com.telmex.demo.constants.EstadoCargaConstants;
+import com.telmex.demo.constants.NotificationConstants;
 import com.telmex.demo.dto.RowEstadoCuenta;
 import com.telmex.demo.dto.excel.BookDto;
 import com.telmex.demo.dto.excel.SheetDto;
 import com.telmex.demo.dto.mapper.EstadoCuentaDetalleMapper;
-import com.telmex.demo.entity.EstadoCuenta;
-import com.telmex.demo.entity.EstadoCuentaDetalle;
+import com.telmex.demo.entity.*;
 
 import com.telmex.demo.models.SpeechEvent;
 import com.telmex.demo.service.ArchivoService;
 import com.telmex.demo.service.EstadoCuentaService;
-import com.telmex.demo.service.ExcelReaderService;
+import com.telmex.demo.components.ExcelReaderService;
+import com.telmex.demo.service.NotificacionService;
 import com.telmex.demo.service.external.sftp.FtpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 
+import java.util.Date;
 import java.util.List;
 
 import java.util.Set;
@@ -48,12 +50,15 @@ public class ArchivoServiceImpl implements ArchivoService {
     private EstadoCuentaService estadoCuentaService;
     @Autowired
     private SpeakerPublisher speakerPublisher;
+
+    @Autowired
+    private NotificacionService notificacionService;
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
-    public EstadoCuenta procesarArchivoEstadoCuenta(LocalDate fechaArchivo) {
+    public EstadoCuenta procesarArchivoEstadoCuenta(LocalDate fechaArchivo, UserSession session) {
         String nameFile = getNameFile(fechaArchivo);
-        EstadoCuenta estadoCuenta = createEstadoCuenta( fechaArchivo);
+        EstadoCuenta estadoCuenta = createEstadoCuenta( fechaArchivo,session);
         procesarArchivo(nameFile,estadoCuenta);
         return estadoCuenta;
     }
@@ -61,19 +66,20 @@ public class ArchivoServiceImpl implements ArchivoService {
 
     @Async
     public void procesarArchivo(String nameFile, EstadoCuenta estadoCuenta)  {
+        UserSession session = estadoCuenta.getSession();
         Thread hilo = new Thread(){
             @Override
             public void run() {
                 try {
+
                     estadoCuentaService.updateStatusEstadoCuenta(estadoCuenta.getIdEstadoCuenta(),EstadoCargaConstants.INICIADO);
-                    speakerPublisher.speak(new SpeechEvent<EstadoCuenta>(this,estadoCuenta,1));
+                    publicarNotificacion(crearNotification(NotificationConstants.INFO,session,EstadoCargaConstants.INICIADO),session.getIdSesion());
                     logger.info("Inicia obtener archivo");
                     Instant begin = Instant.now();
                     File file = ftpService.getFile(nameFile);
                     logger.info("Termina obtener archivo");
                     estadoCuentaService.updateStatusEstadoCuenta(estadoCuenta.getIdEstadoCuenta(),EstadoCargaConstants.PROCESANDO);
-                    estadoCuenta.setEstatusCarga(EstadoCargaConstants.PROCESANDO);
-                    speakerPublisher.speak(new SpeechEvent<EstadoCuenta>(this,estadoCuenta,1));
+                    publicarNotificacion(crearNotification(NotificationConstants.INFO,session,EstadoCargaConstants.PROCESANDO),session.getIdSesion());
                     BookDto<SheetDto<RowEstadoCuenta>> book = excelReaderService.getFileEstadoCuenta(file);
                     createEstadoCuentaDetalle(book, estadoCuenta);
                     ftpService.chanelExit();
@@ -82,11 +88,11 @@ public class ArchivoServiceImpl implements ArchivoService {
                 }catch (JSchException | SftpException e) {
                     logger.error("Error al obtener archivo {}",e);
                     estadoCuentaService.updateStatusEstadoCuenta(estadoCuenta.getIdEstadoCuenta(),EstadoCargaConstants.ARCHIVO_NO_ENCONTRADO);
-                    speakerPublisher.speak(new SpeechEvent<EstadoCuenta>(this,estadoCuenta,1));
+                    publicarNotificacion(crearNotification(NotificationConstants.INFO,session,EstadoCargaConstants.ARCHIVO_NO_ENCONTRADO),session.getIdSesion());
                 }  catch (IOException e) {
                     logger.error("Error al obtener archivo {}",e);
                     estadoCuentaService.updateStatusEstadoCuenta(estadoCuenta.getIdEstadoCuenta(),EstadoCargaConstants.FALLIDO);
-                    speakerPublisher.speak(new SpeechEvent<EstadoCuenta>(this,estadoCuenta,1));
+                    publicarNotificacion(crearNotification(NotificationConstants.INFO,session,EstadoCargaConstants.FALLIDO),session.getIdSesion());
                 }
             }
         };
@@ -101,17 +107,30 @@ public class ArchivoServiceImpl implements ArchivoService {
         estadoCuentaService.addDetalle(detalleEstadoCuenta);
     }
 
-    private EstadoCuenta createEstadoCuenta(LocalDate fechaArchivo) {
+    private EstadoCuenta createEstadoCuenta(LocalDate fechaArchivo,UserSession session) {
         EstadoCuenta estadoCuenta = new EstadoCuenta();
         estadoCuenta.setEstadoCuenta(ArchivoContants.DATE_FORMAT.format(fechaArchivo));
         estadoCuenta.setNombreArchivo(getNameFile(fechaArchivo));
         estadoCuenta.setEstatusCarga(EstadoCargaConstants.INICIADO);
+        estadoCuenta.setSession(session);
         return estadoCuentaService.create(estadoCuenta);
     }
-
 
     private String getNameFile(LocalDate fechaArchivo) {
         String fecha = ArchivoContants.DATE_FORMAT.format(fechaArchivo);
         return ArchivoContants.NAME_FILE_PREFIX + fecha + ArchivoContants.EXTENSION_FILE;
+    }
+
+    private Notificacion crearNotification(Notificacion.NotificacionBuilder notificacion, UserSession userSession, EstatusCarga estatusCarga) {
+        notificacion.titulo("CARGA DE ARCHIVO");
+        notificacion.descripcion("La carga de archivo cambio de estado a "+estatusCarga.getEstatusCarga());
+        notificacion.fechaCreacion(new Date());
+        notificacion.usuario(userSession.getUsuario());
+        return  notificacion.build();
+    }
+
+    private void publicarNotificacion(Notificacion notificacion,Long idSession){
+        Notificacion newNotificacion = notificacionService.create(notificacion);
+        speakerPublisher.speak(new SpeechEvent<Notificacion>(this,newNotificacion,idSession));
     }
 }

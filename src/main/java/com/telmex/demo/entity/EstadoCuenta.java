@@ -14,7 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "LYT_ESTADOCUENTA")
-public class EstadoCuenta {
+public class EstadoCuenta extends BaseObject{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,4 @@ public class EstadoCuenta {
     private BigDecimal montoCliente;
     private BigDecimal montoChargeBk;
     private BigDecimal montoOtros;
-
-    //@OneToMany(mappedBy = "estadoCuenta")
-    //private Set<EstadoCuentaDetalle> detalleCuenta;
 }

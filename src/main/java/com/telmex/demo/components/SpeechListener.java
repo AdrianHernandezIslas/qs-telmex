@@ -2,6 +2,7 @@ package com.telmex.demo.components;
 
 import com.telmex.demo.models.SpeechEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -28,7 +29,7 @@ public class SpeechListener {
             return;
         }
         try {
-            sseEmitter.send(event.getMessage());
+            sseEmitter.send(event.getMessage(), MediaType.APPLICATION_JSON);
         } catch (IOException e) {
             sseEmitter.complete();
             sseEmitters.remove(listenerId);

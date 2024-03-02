@@ -3,6 +3,7 @@
     <property name="ireport.zoom" value="2.143588810000004"/>
     <property name="ireport.x" value="0"/>
     <property name="ireport.y" value="0"/>
+    <property name="net.sf.jasperreports.export.xls.detect.cell.type" value="true"/>
     <parameter name="idEstadoCuenta" class="java.lang.String"/>
     <parameter name="pagoConcepto" class="java.lang.String"/>
     <parameter name="idTipoEmpleado" class="java.lang.String"/>

@@ -11,7 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "RHM_EMPLEADOPERFIL")
-public class Perfil {
+public class PerfilEmpleado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column()

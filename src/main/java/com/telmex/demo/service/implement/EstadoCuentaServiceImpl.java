@@ -81,8 +81,9 @@ public class EstadoCuentaServiceImpl implements EstadoCuentaService {
         insertData(estadoCuentaDetalleSet);
         if(!estadoCuentaDetalleSet.isEmpty()){
             EstadoCuenta ec = estadoCuentaDetalleSet.iterator().next().getEstadoCuenta();
+            Long idSession = ec.getSession().getIdSesion();
             ec.setEstatusCarga(EstadoCargaConstants.FINALIZADO);
-            speakerPublisher.speak(new SpeechEvent<EstadoCuenta>(this,ec,1));
+            speakerPublisher.speak(new SpeechEvent<EstadoCuenta>(this,ec,idSession));
             updateStatusEstadoCuenta(ec.getIdEstadoCuenta(),EstadoCargaConstants.FINALIZADO);
         }
         Instant end = Instant.now();

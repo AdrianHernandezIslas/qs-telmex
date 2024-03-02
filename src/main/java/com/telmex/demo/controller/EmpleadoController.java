@@ -1,5 +1,6 @@
 package com.telmex.demo.controller;
 
+import com.telmex.demo.dto.CustomUserDetails;
 import com.telmex.demo.entity.Empleado;
 import com.telmex.demo.dto.CustomResponse;
 import com.telmex.demo.service.EmpleadoService;
@@ -10,33 +11,26 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/v1/empleado")
-public class EmpleadoController {
+public class EmpleadoController extends BaseController {
 
     @Autowired
     private EmpleadoService empleadoService;
 
     @PostMapping("/")
-    public ResponseEntity create(@RequestBody Empleado empleado){
+    public ResponseEntity create(@RequestBody Empleado empleado, Principal principal){
         CustomResponse customResponse = new CustomResponse.CustomResponseBuilder(HttpStatus.CREATED).builder();
-        Empleado nuevoEmpleado =  empleadoService.create(empleado);
+        addSession(empleado,principal);
+        Empleado nuevoEmpleado = empleadoService.create(empleado);
         customResponse.setData(nuevoEmpleado);
         return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
     }
 
-    @GetMapping("/")
-    public ResponseEntity getAll(@RequestParam(defaultValue = "1") int page,
-                                 @RequestParam(defaultValue = "10") int size){
-        CustomResponse customResponse = new CustomResponse.CustomResponseBuilder(HttpStatus.OK).builder();
-        PageRequest pr = PageRequest.of(page, size);
-        Page<Empleado> dataPage = empleadoService.getAll(pr);
-        customResponse.setData(Optional.ofNullable(dataPage));
-        return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
-    }
 
     @GetMapping("/{idEmpleado}")
     public ResponseEntity findOne(@PathVariable Integer idEmpleado){
@@ -47,8 +41,9 @@ public class EmpleadoController {
     }
 
     @PatchMapping("/{idEmpleado}")
-    public ResponseEntity  update(@RequestBody Empleado empleado,@PathVariable Integer idEmpleado){
+    public ResponseEntity  update(@RequestBody Empleado empleado,@PathVariable Integer idEmpleado,Principal principal){
         CustomResponse customResponse = new CustomResponse.CustomResponseBuilder(HttpStatus.OK).builder();
+        addSession(empleado,principal);
         empleado.setIdEmpleado(idEmpleado);
         Empleado updateEmpleado = empleadoService.update(empleado);
         customResponse.setData(updateEmpleado);
