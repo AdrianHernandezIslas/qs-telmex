@@ -31,15 +31,6 @@ public class EmpleadoController extends BaseController {
         return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
     }
 
-    @GetMapping("/")
-    public ResponseEntity getAll(@RequestParam(defaultValue = "1") int page,
-                                 @RequestParam(defaultValue = "10") int size){
-        CustomResponse customResponse = new CustomResponse.CustomResponseBuilder(HttpStatus.OK).builder();
-        PageRequest pr = PageRequest.of(page, size);
-        Page<Empleado> dataPage = empleadoService.getAll(pr);
-        customResponse.setData(Optional.ofNullable(dataPage));
-        return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
-    }
 
     @GetMapping("/{idEmpleado}")
     public ResponseEntity findOne(@PathVariable Integer idEmpleado){
