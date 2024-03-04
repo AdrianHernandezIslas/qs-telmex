@@ -1,12 +1,17 @@
 package com.telmex.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -68,4 +73,15 @@ public class Empleado extends BaseObject{
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "idempleado")
     private Set<DatoBancarioEmpleado> detalleBancario;
+
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "empleado")
+    @Fetch(value= FetchMode.SELECT)
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    private Set<UserInfo> usuarios;
+
+    @Transient
+    public boolean getHasUser(){
+        return Optional.ofNullable(usuarios).isPresent() && !usuarios.isEmpty();
+    }
 }
