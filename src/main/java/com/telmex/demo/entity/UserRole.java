@@ -1,11 +1,10 @@
 package com.telmex.demo.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Data
@@ -24,4 +23,8 @@ public class UserRole {
     @Column(name = "descripcion")
     private String description;
 
+    @OneToMany(mappedBy = "rol")
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    private Set<UserPermission> permissions;
 }
