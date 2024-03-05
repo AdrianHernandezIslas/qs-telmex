@@ -47,14 +47,4 @@ public class UsuarioController {
         }
     }
 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @GetMapping("/test")
-    public String test() {
-        try {
-            return "Welcome";
-        } catch (Exception e){
-            throw new RuntimeException(e);
-        }
-    }
-
 }

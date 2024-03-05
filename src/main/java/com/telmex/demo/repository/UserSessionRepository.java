@@ -14,4 +14,6 @@ public interface UserSessionRepository extends JpaRepository<UserSession, Long> 
     @Modifying
     @Query("UPDATE UserSession s SET s.activa=0, s.fechaFin=now() WHERE s.usuario.idUser = :idUsuario AND s.activa=1")
     void disableSession(@Param("idUsuario") long idUsuario);
+
+
 }
