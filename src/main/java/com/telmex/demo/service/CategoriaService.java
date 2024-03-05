@@ -5,5 +5,5 @@ import com.telmex.demo.entity.UserCategory;
 import java.util.List;
 
 public interface CategoriaService {
-    List<UserCategory> findAllByRol();
+    List<UserCategory> findAllByRol(List<Long> idRol);
 }
