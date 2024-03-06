@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class NotificacionServiceImpl implements NotificacionService {
 
@@ -20,8 +22,9 @@ public class NotificacionServiceImpl implements NotificacionService {
     }
 
     @Override
-    public Page<Notificacion> getAll(Pageable page, UserSession userSession) {
-        return notificacionRepository.findAllByUsuario(page,userSession.getUsuario());
+    public Page<Notificacion> getAll(Pageable page, UserSession userSession, Optional<String> status) {
+        String statusValue = status.orElse("%%");
+        return notificacionRepository.findAllByUsuario(page,userSession.getUsuario().getIdUser(),statusValue);
     }
 
     @Override
