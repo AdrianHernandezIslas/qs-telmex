@@ -18,6 +18,9 @@ public interface NotificacionRepository extends JpaRepository<Notificacion, Long
     @Query("UPDATE Notificacion n SET n.leido = 1 WHERE n.idNotificacion = :idNotificacion")
     void updateStatusRead(@Param("idNotificacion") Long idNotificacion);
 
-    Page<Notificacion> findAllByUsuario(Pageable page,UserInfo user);
+    @Query("SELECT n FROM Notificacion n WHERE n.usuario.idUser = :idUser AND IF(n.leido,'1','0') LIKE :status")
+    Page<Notificacion> findAllByUsuario(Pageable page,
+                                        @Param("idUser") Long idUsuario,
+                                        @Param("status") String status);
 
 }
