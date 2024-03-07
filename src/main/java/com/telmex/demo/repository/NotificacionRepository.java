@@ -23,4 +23,9 @@ public interface NotificacionRepository extends JpaRepository<Notificacion, Long
                                         @Param("idUser") Long idUsuario,
                                         @Param("status") String status);
 
+    @Transactional
+    @Modifying
+    @Query("UPDATE Notificacion n SET n.leido = 1 WHERE n.usuario.idUser = :idUsuario")
+    void markReadAllByUser(@Param("idUsuario") Long idUsuario);
+
 }

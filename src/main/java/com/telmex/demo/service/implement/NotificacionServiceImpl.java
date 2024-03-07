@@ -31,4 +31,9 @@ public class NotificacionServiceImpl implements NotificacionService {
     public void updateIdRead(Long idNotificacion) {
         notificacionRepository.updateStatusRead(idNotificacion);
     }
+
+    @Override
+    public void markReadAllByUser(Long idUsuario) {
+        notificacionRepository.markReadAllByUser(idUsuario);
+    }
 }
