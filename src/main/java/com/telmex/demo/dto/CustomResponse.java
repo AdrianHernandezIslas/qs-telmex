@@ -46,6 +46,7 @@ public class CustomResponse {
 
         public CustomResponseBuilder(HttpStatus httpStatus) {
             this.httpStatus = httpStatus;
+            this.message = "";
         }
 
         public CustomResponseBuilder setData(Object data) {

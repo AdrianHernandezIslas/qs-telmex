@@ -14,4 +14,6 @@ public interface NotificacionService {
     Page<Notificacion> getAll(Pageable page, UserSession userSession, Optional<String> status);
 
     void updateIdRead(Long idNotificacion);
+
+    void markReadAllByUser(Long idUsuario);
 }
