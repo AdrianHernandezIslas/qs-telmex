@@ -7,6 +7,7 @@ import com.telmex.demo.service.NotificacionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class NotificacionController extends BaseController {
                                                  @RequestParam(required = false) String status,
                                                  Principal principal) {
         CustomResponse customResponse = new CustomResponse.CustomResponseBuilder(HttpStatus.OK).builder();
-        PageRequest pr = PageRequest.of(page, size);
+        PageRequest pr = PageRequest.of(page, size,Sort.by("fechaCreacion").descending());
         Page<Notificacion> dataPage = notificacionService.getAll(pr, getSession(principal),Optional.ofNullable(status));
         customResponse.setData(Optional.ofNullable(dataPage));
         return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
