@@ -39,9 +39,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-        String username = jwtService.extractUsername(token);
-        if(username != null){
-            CustomUserDetails userDetails = (CustomUserDetails) userDetailsServiceImpl.loadUserByUsername(username);
+
+        Optional<String> usernameOptional = Optional.ofNullable(jwtService.extractUsername(token));
+
+        if(usernameOptional.isPresent()){
+            CustomUserDetails userDetails = (CustomUserDetails) userDetailsServiceImpl.loadUserByUsername(usernameOptional.get());
             Optional<UserSession>  sessionOptional = validateSession(token,request,userDetails);
             sessionOptional.ifPresent(userSession -> addSession(request, userSession, userDetails));
         }
