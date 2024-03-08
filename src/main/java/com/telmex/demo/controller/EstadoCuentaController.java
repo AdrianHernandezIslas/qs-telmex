@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/v1/cuenta")
-public class EstadoCuentaController {
+public class EstadoCuentaController extends BaseController {
 
     @Autowired
     private EstadoCuentaService estadoCuentaService;
@@ -41,9 +41,10 @@ public class EstadoCuentaController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CustomResponse> getAllEstadoCuenta(@RequestParam(defaultValue = "1") int page,
-                                                             @RequestParam(defaultValue = "10") int size){
+                                                             @RequestParam(defaultValue = "10") int size,
+                                                             @RequestParam(required = false) Optional<String[]> sort){
         CustomResponse customResponse = new CustomResponse.CustomResponseBuilder(HttpStatus.OK).builder();
-        PageRequest pr = PageRequest.of(page, size);
+        PageRequest pr = PageRequest.of(page, size,buildSort(sort));
         Page<EstadoCuenta> data = estadoCuentaService.getAll(pr);
         customResponse.setData(Optional.of(data));
         return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);

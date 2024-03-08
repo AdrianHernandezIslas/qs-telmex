@@ -33,9 +33,10 @@ public class EmpleadoController extends BaseController {
 
     @GetMapping("/")
     public ResponseEntity findAll(@RequestParam(defaultValue = "1") int page,
-                                  @RequestParam(defaultValue = "10") int size){
+                                  @RequestParam(defaultValue = "10") int size,
+                                  @RequestParam(required = false) Optional<String[]> sort){
         CustomResponse customResponse = new CustomResponse.CustomResponseBuilder(HttpStatus.OK).builder();
-        PageRequest pr = PageRequest.of(page, size);
+        PageRequest pr = PageRequest.of(page, size,buildSort(sort));
         Page<Empleado> empleados = empleadoService.getAll(pr);
         customResponse.setData(empleados);
         return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);

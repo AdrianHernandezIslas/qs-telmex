@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -25,11 +27,12 @@ public class NotificacionController extends BaseController {
     @GetMapping("/")
     public ResponseEntity<CustomResponse> getAll(@RequestParam(defaultValue = "0") int page,
                                                  @RequestParam(defaultValue = "10") int size,
-                                                 @RequestParam(required = false) String status,
+                                                 @RequestParam(required = false) Optional<String> status,
+                                                 @RequestParam(required = false) Optional<String[]> sort,
                                                  Principal principal) {
         CustomResponse customResponse = new CustomResponse.CustomResponseBuilder(HttpStatus.OK).builder();
-        PageRequest pr = PageRequest.of(page, size,Sort.by("fechaCreacion").descending());
-        Page<Notificacion> dataPage = notificacionService.getAll(pr, getSession(principal),Optional.ofNullable(status));
+        PageRequest pr = PageRequest.of(page, size,buildSort(sort));
+        Page<Notificacion> dataPage = notificacionService.getAll(pr, getSession(principal), status);
         customResponse.setData(Optional.ofNullable(dataPage));
         return ResponseEntity.status(customResponse.getHttpStatus()).body(customResponse);
     }
