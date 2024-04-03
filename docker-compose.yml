@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.3"
 services:
   mysqldb:
     image: mysql:latest
@@ -11,6 +11,8 @@ services:
       - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
     volumes:
       - db:/var/lib/mysql
+    expose:
+      - '3306'
   ftp-server:
     container_name: ftp-comisiones
     environment:
