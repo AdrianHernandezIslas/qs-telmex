@@ -12,7 +12,7 @@ services:
     volumes:
       - db:/var/lib/mysql
     expose:
-      - '3306'
+      - '3307'
   ftp-server:
     container_name: ftp-comisiones
     environment:
