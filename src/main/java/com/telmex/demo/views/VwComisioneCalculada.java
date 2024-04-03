@@ -1,6 +1,6 @@
 package com.telmex.demo.views;
 
-import jdk.nashorn.internal.ir.annotations.Immutable;
+//import jdk.nashorn.internal.ir.annotations.Immutable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 @Entity
-@Immutable
+//@Immutable
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
