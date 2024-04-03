@@ -37,10 +37,6 @@ services:
       - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
     environment:
       SPRING_APPLICATION_JSON: '{
-             "spring.datasource.url"  : "jdbc:mysql://mysqldb:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?useUnicode=true&characterEncoding=utf8&useSSL=false&createDatabaseIfNotExist=true&cachePrepStmts=true&reWriteBatchedInserts=true&allowPublicKeyRetrieval=true",
-             "spring.datasource.username" : "$MYSQLDB_USER",
-             "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD",
-             "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
              "spring.jpa.hibernate.ddl-auto" : "update",
              "remote.sftp.host" : "$FTP_USER",
              "remote.sftp.username" : "$FTP_HOST",
